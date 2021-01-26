@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/6-1-Audio 16.wav-0f784d84b114611b98f00820a4fd7179.sample"
+
+[deps]
+
+source_file="res://Sounds/Guitar Licks/SFX/6-1-Audio 16.wav"
+dest_files=[ "res://.import/6-1-Audio 16.wav-0f784d84b114611b98f00820a4fd7179.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

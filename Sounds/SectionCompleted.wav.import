@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SectionCompleted.wav-8d3e8406d3cddca1f72af822768fb124.sample"
+
+[deps]
+
+source_file="res://Sounds/SectionCompleted.wav"
+dest_files=[ "res://.import/SectionCompleted.wav-8d3e8406d3cddca1f72af822768fb124.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
