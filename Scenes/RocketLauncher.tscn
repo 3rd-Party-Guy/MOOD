@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/RocketLauncher.gd" type="Script" id=1]
-[ext_resource path="res://Sounds/Launcher_Shoot.wav" type="AudioStream" id=2]
+[ext_resource path="res://Sounds/SFX/Guns/Rocket Launcher - Fire.wav" type="AudioStream" id=2]
 [ext_resource path="res://Objects/Guns/Rocket Launcher/launcher.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Animation" id=1]
@@ -53,3 +53,5 @@ anims/ShotgunFire = SubResource( 3 )
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
+volume_db = 5.0
+bus = "SFX"

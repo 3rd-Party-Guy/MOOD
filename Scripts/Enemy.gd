@@ -28,6 +28,7 @@ onready var eyes =  $Eyes
 onready var shootTimer = $ShootTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
+onready var anim = $rifleRatManV11/AnimationPlayer
 
 onready var navigation = get_parent().get_parent()
 
@@ -44,7 +45,7 @@ func _ready():
 func _physics_process(_delta):
 	
 	# move towards the player
-	if pathNode < path.size() and state == ALERT and move:
+	if pathNode < path.size() and move:
 		# only calculate and move if the enemy is at a long enough distance
 		if global_transform.origin.distance_to(player.global_transform.origin) > minDistance:
 			var direction = (path[pathNode] - global_transform.origin)	# calculates the direction towards the player
@@ -61,11 +62,10 @@ func _process(_delta):
 		audio.play()
 		state = DEAD
 	
-	#if raycast.is_colliding() and not state == DEAD:
-	#	state = ALERT
-	
 	match state:
 		IDLE:
+			if not anim.current_animation == "idleRifle":
+				anim.play("idleRifle")
 			pass
 		
 		ALERT:
@@ -73,7 +73,9 @@ func _process(_delta):
 			look_at(target.global_transform.origin, Vector3.UP)
 			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
 			rotate_z(deg2rad(eyes.rotation.z * TURN_SPEED))
-		
+			if not anim.current_animation == "walkRifle":
+				anim.play("walkRifle")
+			pass
 		KICKED:
 			var collide = move_and_collide(velocity * 5000)
 			if collide:
@@ -82,6 +84,11 @@ func _process(_delta):
 				b.get_node("Particles").emitting = true
 				health -= 30
 		BERSERK:
+			look_at(target.global_transform.origin, Vector3.UP)
+			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
+			rotate_z(deg2rad(eyes.rotation.z * TURN_SPEED))
+			if not anim.current_animation == "shootingRifle":
+				anim.play("shootingRifle")
 			pass
 		
 
@@ -99,6 +106,7 @@ func _on_SightRange_body_entered(body):
 
 func _on_SightRange_body_exited(body):
 	if body.is_in_group("Player") and state != KICKED:
+		shootTimer.stop()
 		state = IDLE
 
 
@@ -106,6 +114,7 @@ func _on_ShootTimer_timeout():
 	if raycast.is_colliding():
 		var hit = raycast.get_collider()
 		if hit.is_in_group("Player"):
+			state = BERSERK
 			print("Player got hit.")
 			hit.onDamage(damage)
 

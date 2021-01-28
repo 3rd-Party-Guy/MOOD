@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sounds/Guitar Licks/SFX/12-1-Audio 30.wav" type="AudioStream" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Font/FONT.tres" type="DynamicFont" id=11]
 [ext_resource path="res://Coin.png" type="Texture" id=12]
 [ext_resource path="res://Scenes/DashGUI.gd" type="Script" id=13]
+[ext_resource path="res://Sounds/Player Death Sound.wav" type="AudioStream" id=14]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Score"
@@ -421,6 +422,12 @@ __meta__ = {
 [node name="FlashTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="DeathAudio" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 14 )
+volume_db = 5.0
+bus = "SFX"
 [connection signal="timeout" from="DashCooldown" to="." method="_on_DashCooldown_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]

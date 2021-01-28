@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Scenes/SectionOne.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Tunnels/TunnelSide/TunnelSide.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Objects/Tunnels/BigRoom1/BigRoom.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Objects/Tunnels/SECRETONE/SECRETONE.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Objects/Tunnels/SECRETONE/SECRETONE.gd" type="Script" id=8]
+[ext_resource path="res://Objects/Tunnels/LowerTunnels/LowerTunnels.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Button.gd" type="Script" id=10]
 [ext_resource path="res://Scenes/Button2.gd" type="Script" id=11]
 [ext_resource path="res://Scenes/Button3.gd" type="Script" id=12]
@@ -177,6 +178,9 @@ shape = SubResource( 1 )
 "Secret",
 ] instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.912601, -2.07769, -0.0692005 )
+
+[node name="LowerTunnels" parent="." instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 13.0683, -63.8744, 47.7666 )
 
 [node name="Sections" type="Node" parent="."]
 

@@ -27,6 +27,7 @@ onready var eyes =  $Eyes
 onready var hitTimer = $HitTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
+onready var anim = $ratManV2/AnimationPlayer
 
 onready var bloodKicked = preload("res://Scenes/BloodSplatterKick.tscn")
 
@@ -59,12 +60,11 @@ func _process(_delta):
 		print("Enemy has died!")
 		audio.play()
 		state = DEAD
-		
-	if raycast.is_colliding() and not state == DEAD and not state == KICKED:
-		state = ALERT
 	
 	match state:
 		IDLE:
+			if not anim.current_animation == "idleBat":
+				anim.play("idleBat")
 			pass
 		
 		ALERT:
@@ -72,6 +72,9 @@ func _process(_delta):
 			if target:
 				eyes.look_at(target.global_transform.origin, Vector3.UP)
 				rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
+			if not anim.current_animation == "walkBat":
+				anim.play("walkBat")
+			pass
 		KICKED:
 			var collide = move_and_collide(velocity * 100)
 			if collide:
@@ -79,7 +82,10 @@ func _process(_delta):
 				add_child(b)
 				b.get_node("Particles").emitting = true
 				health -= 30
+			pass
 		BERSERK:
+			if not anim.current_animation == "batSwing":
+				anim.play("batSwing")
 			pass
 		
 
@@ -88,7 +94,7 @@ func move_to(target_pos):
 	pathNode = 0
 
 func _on_SightRange_body_entered(body):
-	if body.is_in_group("Player") and state != KICKED:
+	if body.is_in_group("Player") and state != KICKED and state != BERSERK:
 		state = ALERT
 		target = body
 		navigationTimer.start()

@@ -48,6 +48,7 @@ func fire():
 		camera.translation,
 		Vector3(rand_range(MAX_CAM_SHAKE_X, -MAX_CAM_SHAKE_X), defCamTranslation.y + rand_range(MAX_CAM_SHAKE_Y,-MAX_CAM_SHAKE_Y), defCamTranslation.z),				0.7)
 		
+		audio.pitch_scale = rand_range(0.5, 1.5)
 		audio.play()
 		
 		if raycast.is_colliding():

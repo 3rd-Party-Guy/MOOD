@@ -1,20 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=1]
-[ext_resource path="res://PSXDef.tres" type="Material" id=2]
+[ext_resource path="res://Objects/Enemies/Rifle/RifleEnemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sounds/EnemyDie.wav" type="AudioStream" id=3]
 
-[sub_resource type="CapsuleMesh" id=1]
-radius = 0.5
-mid_height = 1.5
-
-[sub_resource type="CubeMesh" id=2]
-
-[sub_resource type="CapsuleShape" id=3]
+[sub_resource type="CapsuleShape" id=1]
 radius = 0.5
 height = 1.5
 
-[sub_resource type="SphereShape" id=4]
+[sub_resource type="SphereShape" id=2]
 margin = 0.001
 radius = 20.0
 
@@ -28,25 +22,18 @@ transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 0, 0
 enabled = true
 cast_to = Vector3( 10, 0, 0 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 2 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( 0.2, 0, 0, 0, -3.25841e-08, 0.1, 0, -0.2, -1.62921e-08, 0, 0.7, -0.4 )
-mesh = SubResource( 2 )
-material/0 = null
+[node name="rifleRatManV11" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="SightRange" type="Area" parent="."]
 collision_layer = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="SightRange"]
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 
 [node name="Eyes" type="Spatial" parent="."]
 

@@ -123,6 +123,7 @@ material/0 = null
 
 [node name="Enemy5" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35008, 0 )
+sightRange = 2
 
 [node name="Enemy3" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9658, 4.59291, 25.192 )

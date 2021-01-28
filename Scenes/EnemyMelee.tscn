@@ -1,24 +1,18 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/EnemyMelee.gd" type="Script" id=1]
-[ext_resource path="res://PSXDef.tres" type="Material" id=2]
+[ext_resource path="res://Objects/Enemies/Bat/BatRat.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sounds/EnemyDie.wav" type="AudioStream" id=3]
 
-[sub_resource type="CapsuleMesh" id=1]
-radius = 0.5
-mid_height = 1.5
-
-[sub_resource type="CubeMesh" id=2]
-
-[sub_resource type="CapsuleShape" id=3]
+[sub_resource type="CapsuleShape" id=2]
 radius = 0.5
 height = 1.5
 
-[sub_resource type="SphereShape" id=4]
+[sub_resource type="SphereShape" id=3]
 margin = 0.001
 radius = 10.0
 
-[sub_resource type="SphereShape" id=5]
+[sub_resource type="SphereShape" id=4]
 radius = 2.0
 
 [node name="EnemyMelee" type="KinematicBody" groups=[
@@ -31,25 +25,18 @@ transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 0, 0
 enabled = true
 cast_to = Vector3( 10, 0, 0 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 2 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( 0.2, 0, 0, 0, -3.25841e-08, 0.1, 0, -0.2, -1.62921e-08, 0, 0.7, -0.4 )
-mesh = SubResource( 2 )
-material/0 = null
+[node name="ratManV2" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="SightRange" type="Area" parent="."]
 collision_layer = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="SightRange"]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="Eyes" type="Spatial" parent="."]
 
@@ -71,7 +58,7 @@ space_override = 1
 collision_layer = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="HitRange"]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 [connection signal="body_entered" from="SightRange" to="." method="_on_SightRange_body_entered"]
 [connection signal="body_exited" from="SightRange" to="." method="_on_SightRange_body_exited"]
 [connection signal="timeout" from="HitTimer" to="." method="_on_HitTimer_timeout"]

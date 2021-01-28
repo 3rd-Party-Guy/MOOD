@@ -27,6 +27,7 @@ onready var eyes =  $Eyes
 onready var shootTimer = $ShootTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
+onready var anim = $fatRatManV14/AnimationPlayer
 
 onready var projectile = preload("res://Scenes/EnemyProjectileBullet.tscn")
 onready var bloodKicked = preload("res://Scenes/BloodSplatterKick.tscn")
@@ -61,17 +62,19 @@ func _process(_delta):
 		audio.play()
 		state = DEAD
 	
-	if raycast.is_colliding() and not state == DEAD:
-		state = ALERT
-	
 	match state:
 		IDLE:
+			if not anim.current_animation == "idleLauncher":
+				anim.play("idleLauncher")
 			pass
 		
 		ALERT:
 			# look at player
 			eyes.look_at(target.global_transform.origin, Vector3.UP)
 			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
+			if not anim.current_animation == "walkLauncher":
+					anim.play("walkLauncher")
+			pass
 		KICKED:
 			var collide = move_and_collide(velocity * 10000)
 			if collide:
@@ -79,7 +82,11 @@ func _process(_delta):
 				add_child(b)
 				b.get_node("Particles").emitting = true
 				health -= 30
+				
+			pass
 		BERSERK:
+			if not anim.current_animation == "fireLauncher":
+				anim.play("fireLauncher")
 			pass
 		
 
@@ -102,6 +109,7 @@ func _on_SightRange_body_exited(body):
 
 func _on_ShootTimer_timeout():
 	if raycast.is_colliding():
+		state = ALERT
 		var p = projectile.instance()
 		add_child(p)
 		p.shoot = true

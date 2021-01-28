@@ -43,6 +43,7 @@ onready var animationPlayerDeath = $AnimationPlayerDeath
 onready var animationPlayerKick = $AnimationPlayerKick
 onready var jumpAudio = $JumpAudio
 onready var hurtAudio = $HurtAudio
+onready var deathAudio = $DeathAudio
 
 onready var defCamTranslation = camera.translation
 
@@ -236,6 +237,7 @@ func onHeal(hp):
 
 func gameOver():
 	get_tree().paused = true
+	deathAudio.play()
 	deathTimer.start()
 	deathScreen.visible = true
 
