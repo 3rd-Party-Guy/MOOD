@@ -22,8 +22,7 @@ transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 0, 0
 enabled = true
 cast_to = Vector3( 10, 0, 0 )
 
-[node name="fatRatManV14" parent="." instance=ExtResource( 2 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
+[node name="fatRatManV15" parent="." instance=ExtResource( 2 )]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )

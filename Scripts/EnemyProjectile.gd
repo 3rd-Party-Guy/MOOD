@@ -27,7 +27,7 @@ onready var eyes =  $Eyes
 onready var shootTimer = $ShootTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
-onready var anim = $fatRatManV14/AnimationPlayer
+onready var anim = $fatRatManV15/AnimationPlayer
 
 onready var projectile = preload("res://Scenes/EnemyProjectileBullet.tscn")
 onready var bloodKicked = preload("res://Scenes/BloodSplatterKick.tscn")
