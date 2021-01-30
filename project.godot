@@ -60,8 +60,6 @@ settings/stdout/print_fps=true
 
 window/size/width=1920
 window/size/height=1080
-window/size/fullscreen=true
-window/size/always_on_top=true
 
 [gdnative]
 
