@@ -8,7 +8,7 @@
 resource_name = "AssaultFire"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:translation")
+tracks/0/path = NodePath("test_gun:translation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -17,7 +17,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.25, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0.3, -0.9, -0.5 ), Vector3( 0.3, -0.9, -0.3 ), Vector3( 0.3, -0.9, -0.5 ) ]
+"values": [ Vector3( -0.3, 0.3, 0.7 ), Vector3( -0.3, 0.3, 0.5 ), Vector3( -0.3, 0.3, 0.7 ) ]
 }
 
 [sub_resource type="Animation" id=2]

@@ -17,8 +17,8 @@ export var damage = 5
 var target
 var velocity
 
-export var sightRange = 20
-export var minDistance = 1.5
+export var sightRange : int
+export var minDistance : float
 
 export var speed = 10
 
@@ -27,6 +27,7 @@ onready var eyes =  $Eyes
 onready var hitTimer = $HitTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
+onready var audioAlert = $AudioAlert
 onready var anim = $ratManV2/AnimationPlayer
 
 onready var bloodKicked = preload("res://Scenes/BloodSplatterKick.tscn")
@@ -96,6 +97,7 @@ func move_to(target_pos):
 func _on_SightRange_body_entered(body):
 	if body.is_in_group("Player") and state != KICKED and state != BERSERK:
 		state = ALERT
+		audioAlert.play()
 		target = body
 		navigationTimer.start()
 

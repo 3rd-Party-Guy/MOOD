@@ -13,10 +13,10 @@ var MIN_POINTS = 2000
 var MAX_POINTS = 4350
 
 onready var animPlayer = $"AnimationPlayer"
-onready var rayRotation = $"../ShotgunRayCast"
-onready var raycasts = [$"../ShotgunRayCast/ShotgunRay1", $"../ShotgunRayCast/ShotgunRay2", $"../ShotgunRayCast/ShotgunRay3"]
+onready var rayRotation = $"../../ShotgunRayCast"
+onready var raycasts = [$"../../ShotgunRayCast/ShotgunRay1", $"../../ShotgunRayCast/ShotgunRay2", $"../../ShotgunRayCast/ShotgunRay3"]
 onready var camera = get_parent()
-onready var player = $"../../../"
+onready var player = $"../../../../"
 onready var audio = $Audio
 
 onready var ammoStat = player.find_node("Ammo")
@@ -27,15 +27,15 @@ onready var blood = preload("res://Scenes/BloodSplatter.tscn")
 func _ready():
 	defCamTranslation = camera.translation
 # warning-ignore:return_value_discarded
-	$"../../../".connect("shootShotgun", self, "fire")
+	player.connect("shootShotgun", self, "fire")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showRifle", self, "hide")
+	player.connect("showRifle", self, "hide")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showShotgun", self, "show")
+	player.connect("showShotgun", self, "show")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showLauncher", self, "hide")
+	player.connect("showLauncher", self, "hide")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showNone", self, "hide")
+	player.connect("showNone", self, "hide")
 
 func fire():
 	if not animPlayer.is_playing() and not ammo < 3:
@@ -72,7 +72,7 @@ func fire():
 					
 					if tempDmg > 0:
 						target.health -= tempDmg
-						$"../../../Score".ChangeScore(rand_range(MIN_POINTS, MAX_POINTS))
+						player.get_node("Score").ChangeScore(rand_range(MIN_POINTS, MAX_POINTS))
 					elif target.is_in_group("Secret"):
 						player.Flash("SECRET FOUND")
 						target.onDiscovered()

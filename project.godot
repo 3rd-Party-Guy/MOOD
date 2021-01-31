@@ -9,43 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "HBoxContainer",
-"class": "ContributorClass",
-"language": "GDScript",
-"path": "res://addons/github-integration/scripts/ContributorClass.gd"
-}, {
-"base": "PanelContainer",
-"class": "GistItem",
-"language": "GDScript",
-"path": "res://addons/github-integration/scripts/GistItem.gd"
-}, {
 "base": "",
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://git_api.gdns"
-}, {
-"base": "HBoxContainer",
-"class": "InvitationItem",
-"language": "GDScript",
-"path": "res://addons/github-integration/scripts/InvitationItem.gd"
-}, {
-"base": "PanelContainer",
-"class": "RepositoryItem",
-"language": "GDScript",
-"path": "res://addons/github-integration/scripts/RepositoryItem.gd"
 } ]
 _global_script_class_icons={
-"ContributorClass": "",
-"GistItem": "",
-"GitAPI": "",
-"InvitationItem": "",
-"RepositoryItem": ""
+"GitAPI": ""
 }
 
 [application]
 
-config/name="MOOD"
+config/name="DETESTATION"
 run/main_scene="res://Scenes/MainMenu.tscn"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
 [autoload]
@@ -60,6 +37,8 @@ settings/stdout/print_fps=true
 
 window/size/width=1920
 window/size/height=1080
+window/size/fullscreen=true
+window/size/always_on_top=true
 
 [gdnative]
 

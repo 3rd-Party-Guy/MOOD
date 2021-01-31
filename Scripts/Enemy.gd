@@ -17,8 +17,8 @@ export var damage = 5
 var target
 
 export var speed = 10
-export var sightRange = 20
-export var minDistance = 4
+export var sightRange : int
+export var minDistance : int 
 var velocity
 
 export var move = true
@@ -28,6 +28,7 @@ onready var eyes =  $Eyes
 onready var shootTimer = $ShootTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
+onready var audioAlert = $AudioAlert
 onready var anim = $rifleRatManV11/AnimationPlayer
 
 onready var navigation = get_parent().get_parent()
@@ -99,6 +100,7 @@ func move_to(target_pos):
 func _on_SightRange_body_entered(body):
 	if body.is_in_group("Player") and state != KICKED:
 		state = ALERT
+		audioAlert.play()
 		target = body
 		shootTimer.start()
 		navigationTimer.start()

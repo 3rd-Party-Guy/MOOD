@@ -13,8 +13,8 @@ var MIN_POINTS = 2000
 var MAX_POINTS = 2650
 
 onready var animPlayer = $"AnimationPlayer"
-onready var raycast = $"../RayCastRifle"
-onready var player = $"../../../"
+onready var raycast = $"../../RayCastRifle"
+onready var player = $"../../../../"
 onready var audio = $Audio
 
 onready var ammoStat = player.find_node("Ammo")
@@ -27,15 +27,15 @@ onready var bulletDecal = preload("res://Scenes/BulletDecal.tscn")
 func _ready():
 	defCamTranslation = camera.translation
 # warning-ignore:return_value_discarded
-	$"../../../".connect("shootLauncher", self, "fire")
+	player.connect("shootLauncher", self, "fire")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showShotgun", self, "hide")
+	player.connect("showShotgun", self, "hide")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showRifle", self, "hide")
+	player.connect("showRifle", self, "hide")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showLauncher", self, "show")
+	player.connect("showLauncher", self, "show")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showNone", self, "hide")
+	player.connect("showNone", self, "hide")
 
 func fire():
 	if not animPlayer.is_playing() and ammo != 0:

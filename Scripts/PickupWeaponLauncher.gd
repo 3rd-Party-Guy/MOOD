@@ -5,7 +5,7 @@ onready var weaponInstance = weapon.instance()
 
 func _on_WeaponPickup_body_entered(body):
 	if body.is_in_group("Player"):
-		body.get_node("Head/Camera").add_child(weaponInstance)
+		body.get_node("Head/Camera/Hand").add_child(weaponInstance)
 		body.curWeapon = 3
 		body.ChangeWeapon(3)
 		#body.get_node("Head/Camera/Weapon").transform.origin.x = 0.3

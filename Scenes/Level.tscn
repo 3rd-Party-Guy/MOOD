@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=2]
+[gd_scene load_steps=124 format=2]
 
 [ext_resource path="res://Scenes/SectionOne.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Tunnels/TunnelSide/TunnelSide.tscn" type="PackedScene" id=2]
@@ -9,9 +9,9 @@
 [ext_resource path="res://Objects/Tunnels/SECRETONE/SECRETONE.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Objects/Tunnels/SECRETTWO/SECRETONE.gd" type="Script" id=8]
 [ext_resource path="res://Objects/Tunnels/LowerTunnels/LowerTunnels.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/Button.gd" type="Script" id=10]
-[ext_resource path="res://Scenes/Button2.gd" type="Script" id=11]
-[ext_resource path="res://Scenes/Button3.gd" type="Script" id=12]
+[ext_resource path="res://Scripts/Button.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/Button2.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/Button3.gd" type="Script" id=12]
 [ext_resource path="res://Scenes/PuzzleOne.gd" type="Script" id=13]
 [ext_resource path="res://Objects/Tunnels/BigRoom1/Door/Door.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Objects/Tunnels/Drop/Drop.tscn" type="PackedScene" id=15]
@@ -19,24 +19,22 @@
 [ext_resource path="res://Objects/Tunnels/Platform/Platform.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Scenes/DeathArea.gd" type="Script" id=18]
 [ext_resource path="res://Objects/Tunnels/SECRETTWO/SECRETTWO.gd" type="Script" id=19]
+[ext_resource path="res://Scripts/SecretTeleport.gd" type="Script" id=20]
+[ext_resource path="res://Scripts/Platform.gd" type="Script" id=21]
+[ext_resource path="res://Scripts/Secret.gd" type="Script" id=22]
+[ext_resource path="res://Objects/Tunnels/SECRETTHREE/SecretThree.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Objects/Switch/switchIsOn.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Objects/Switch/switchIsOff.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Objects/Switch/switchIsOff.glb" type="PackedScene" id=26]
+[ext_resource path="res://Scenes/End.gd" type="Script" id=27]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 1.97495, 1.3664, 0.0765836 )
 
-[sub_resource type="GDScript" id=3]
-script/source = "extends Spatial
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 3.16165, 3.55848, 0.016854 )
 
-onready var sec = $\"SECRETONE\"
-
-func onInteracted(player):
-	player.Flash(\"SECRET FOUND\")
-	
-	sec.queue_free()
-	queue_free()
-"
-
-[sub_resource type="Animation" id=4]
-resource_name = "Platform 1"
+[sub_resource type="Animation" id=3]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -47,13 +45,12 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 1, 2 ),
-"transitions": PoolRealArray( 0.2, 0.2, 0.2 ),
+"transitions": PoolRealArray( 0.7, 0.7, 0.7 ),
 "update": 0,
 "values": [ Vector3( -4.90815, -63.312, 57.4005 ), Vector3( -4.908, -63.312, 63 ), Vector3( -4.90815, -63.312, 57.4005 ) ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "Platform 1"
+[sub_resource type="Animation" id=4]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -64,13 +61,12 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 1, 2 ),
-"transitions": PoolRealArray( 0.2, 0.2, 0.2 ),
+"transitions": PoolRealArray( 0.7, 0.7, 0.7 ),
 "update": 0,
 "values": [ Vector3( -10, -63.312, 57.4 ), Vector3( -10, -63.312, 63 ), Vector3( -10, -63.312, 57.4 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Platform 1"
+[sub_resource type="Animation" id=5]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -81,77 +77,338 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 1, 2 ),
-"transitions": PoolRealArray( 0.2, 0.2, 0.2 ),
+"transitions": PoolRealArray( 0.7, 0.7, 0.7 ),
 "update": 0,
 "values": [ Vector3( -18.9076, -63.312, 61.9596 ), Vector3( -15, -63.312, 61.96 ), Vector3( -18.9076, -63.312, 61.9596 ) ]
 }
+
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 4.98375, 0.0257007, 5.07419 )
 
 [sub_resource type="BoxShape" id=7]
 extents = Vector3( 4.98375, 0.0257007, 5.07419 )
 
 [sub_resource type="BoxShape" id=8]
-extents = Vector3( 4.98375, 0.0257007, 5.07419 )
-
-[sub_resource type="BoxShape" id=9]
 extents = Vector3( 4.57306, 0.0257007, 5.07419 )
 
-[sub_resource type="BoxShape" id=10]
+[sub_resource type="BoxShape" id=9]
 extents = Vector3( 4.57306, 0.0257007, 31.5859 )
 
-[sub_resource type="BoxShape" id=11]
+[sub_resource type="BoxShape" id=10]
 extents = Vector3( 4.57306, 0.0257007, 12.6919 )
 
-[sub_resource type="BoxShape" id=12]
-extents = Vector3( 4.57306, 0.0257007, 19.5754 )
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 4.57306, 0.0257007, 17.0335 )
 
-[sub_resource type="BoxShape" id=13]
+[sub_resource type="BoxShape" id=77]
+extents = Vector3( 2.48329, 0.0257007, 1.91627 )
+
+[sub_resource type="BoxShape" id=12]
 extents = Vector3( 4.57306, 0.0257007, 17.6356 )
 
-[sub_resource type="BoxShape" id=14]
+[sub_resource type="BoxShape" id=13]
 extents = Vector3( 4.57306, 0.0257007, 9.19188 )
 
-[sub_resource type="BoxShape" id=15]
+[sub_resource type="BoxShape" id=14]
 extents = Vector3( 4.57306, 0.0257007, 22.2608 )
+
+[sub_resource type="BoxShape" id=15]
+extents = Vector3( 4.57306, 0.0257007, 1.82245 )
 
 [sub_resource type="BoxShape" id=16]
 extents = Vector3( 4.57306, 0.0257007, 1.82245 )
 
 [sub_resource type="BoxShape" id=17]
-extents = Vector3( 4.57306, 0.0257007, 1.82245 )
-
-[sub_resource type="BoxShape" id=18]
 extents = Vector3( 3.05712, 2.33208, 0.199223 )
 
-[sub_resource type="BoxShape" id=19]
+[sub_resource type="BoxShape" id=18]
 
-[sub_resource type="CubeMesh" id=20]
-
-[sub_resource type="Animation" id=21]
-length = 0.5
+[sub_resource type="Animation" id=20]
+length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:translation")
+tracks/0/path = NodePath("switchIsOff:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 3.64367, 0, -0.331245 ), Vector3( 3.644, 0, 0 ) ]
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("switchIsOn:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
-[sub_resource type="BoxShape" id=22]
+[sub_resource type="Animation" id=88]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("switchIsOff:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("switchIsOn:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=91]
+resource_name = "buttonTwo"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("switchIsOn:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("switchIsOff:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=89]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("switchIsOff:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("switchIsOn:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=90]
+resource_name = "buttonThree"
+tracks/0/type = "value"
+tracks/0/path = NodePath("switchIsOff:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("switchIsOn:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=92]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("switchIsOff:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("switchIsOn:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=93]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("switchIsOff:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("switchIsOn:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=94]
+resource_name = "buttonTwo"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("switchIsOn:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("switchIsOff:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=95]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("switchIsOff:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("switchIsOn:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=96]
+resource_name = "buttonThree"
+tracks/0/type = "value"
+tracks/0/path = NodePath("switchIsOff:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("switchIsOn:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="BoxShape" id=21]
 extents = Vector3( 0.447136, 1.55802, 1 )
 
-[sub_resource type="BoxShape" id=23]
+[sub_resource type="BoxShape" id=22]
 extents = Vector3( 1.44949, 0.48126, 1.04213 )
 
-[sub_resource type="BoxShape" id=24]
+[sub_resource type="BoxShape" id=23]
 extents = Vector3( 1.05205, 0.48126, 2.44605 )
 
+[sub_resource type="BoxShape" id=24]
+extents = Vector3( 11.1148, 0.0959201, 7.75816 )
+
 [sub_resource type="BoxShape" id=25]
-extents = Vector3( 4.9106, 0.0150492, 4.91283 )
+extents = Vector3( 10, 0.0150492, 12 )
 
 [sub_resource type="BoxShape" id=26]
 extents = Vector3( 3, 0.0150492, 4.91283 )
@@ -188,6 +445,36 @@ extents = Vector3( 2, 0.0150492, 3 )
 
 [sub_resource type="BoxShape" id=37]
 extents = Vector3( 1.17849, 0.0150492, 1.45366 )
+
+[sub_resource type="BoxShape" id=78]
+extents = Vector3( 5, 0.0150492, 4 )
+
+[sub_resource type="BoxShape" id=79]
+extents = Vector3( 4.01503, 0.0150492, 1.28673 )
+
+[sub_resource type="BoxShape" id=80]
+extents = Vector3( 3, 0.0150492, 1.28673 )
+
+[sub_resource type="BoxShape" id=81]
+extents = Vector3( 3, 0.0150492, 1.28673 )
+
+[sub_resource type="BoxShape" id=87]
+extents = Vector3( 1.5225, 0.0150492, 1.4848 )
+
+[sub_resource type="BoxShape" id=82]
+extents = Vector3( 5, 0.0150492, 3 )
+
+[sub_resource type="BoxShape" id=83]
+extents = Vector3( 2, 0.0150492, 3 )
+
+[sub_resource type="BoxShape" id=84]
+extents = Vector3( 2, 0.0150492, 1 )
+
+[sub_resource type="BoxShape" id=85]
+extents = Vector3( 0.495603, 0.496303, 1.42172 )
+
+[sub_resource type="BoxShape" id=86]
+extents = Vector3( 5, 5, 0.0923288 )
 
 [sub_resource type="BoxShape" id=38]
 extents = Vector3( 2.91495, 0.48126, 0.997975 )
@@ -261,10 +548,80 @@ extents = Vector3( 1.17496, 1.62899, 0.24894 )
 [sub_resource type="BoxShape" id=61]
 extents = Vector3( 0.336703, 1.7865, 1 )
 
+[sub_resource type="BoxShape" id=62]
+extents = Vector3( 1.02804, 0.596112, 2.00613 )
+
+[sub_resource type="BoxShape" id=63]
+extents = Vector3( 1.00554, 2.64754, 0.989277 )
+
+[sub_resource type="BoxShape" id=64]
+extents = Vector3( 14.0612, 4.71649, 0.0674296 )
+
+[sub_resource type="BoxShape" id=65]
+extents = Vector3( 11.5331, 4.71649, 0.0674296 )
+
+[sub_resource type="BoxShape" id=66]
+extents = Vector3( 9.81061, 4.71649, 0.0674296 )
+
+[sub_resource type="BoxShape" id=67]
+extents = Vector3( 2.82934, 2.04268, 0.0674296 )
+
+[sub_resource type="BoxShape" id=68]
+extents = Vector3( 2, 3.06349, 0.0674296 )
+
+[sub_resource type="BoxShape" id=69]
+extents = Vector3( 16.0038, 4.71649, 0.0674296 )
+
+[sub_resource type="BoxShape" id=70]
+extents = Vector3( 14.1199, 4.71649, 0.0674296 )
+
+[sub_resource type="BoxShape" id=71]
+extents = Vector3( 14.1199, 3.85351, 0.0674296 )
+
+[sub_resource type="BoxShape" id=72]
+extents = Vector3( 7, 3.85351, 0.0674296 )
+
+[sub_resource type="BoxShape" id=73]
+extents = Vector3( 5, 3.85351, 0.0674296 )
+
+[sub_resource type="BoxShape" id=74]
+extents = Vector3( 4.83656, 4.25353, 0.909015 )
+
+[sub_resource type="BoxShape" id=75]
+extents = Vector3( 2.23464, 1.40937, 0.909015 )
+
+[sub_resource type="BoxShape" id=76]
+extents = Vector3( 0.156732, 3.47343, 4.37141 )
+
+[sub_resource type="BoxShape" id=97]
+extents = Vector3( 1, 2, 3 )
+
 [node name="StaticBody" type="StaticBody"]
 
 [node name="HealthPickup" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, -3.726 )
+
+[node name="HealthPickup2" parent="." instance=ExtResource( 3 )]
+transform = Transform( -5.96046e-08, 0, -1, 0, 1, 0, 1, 0, -5.96046e-08, 27.6246, 5, 24.543 )
+
+[node name="HealthPickup3" parent="." instance=ExtResource( 3 )]
+transform = Transform( -5.96046e-08, 0, -1, 0, 1, 0, 1, 0, -5.96046e-08, 26.6199, 5, 24.543 )
+
+[node name="HealthPickup4" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, 1.03316e-07, 0, 1, 0, -1.03316e-07, 0, -1, 24.6199, -63, 35.543 )
+
+[node name="HealthPickup5" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, 1.03316e-07, 0, 1, 0, -1.03316e-07, 0, -1, 25.6199, -63, 35.543 )
+
+[node name="HealthPickup6" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, 1.03316e-07, 0, 1, 0, -1.03316e-07, 0, -1, 26.6199, -63, 35.543 )
+
+[node name="HealthPickup7" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -27.3801, -63, 19.543 )
+health = 50
+
+[node name="HealthPickup8" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.829608, 0.393621, -0.395997, 0.340248, 0.918732, 0.200405, 0.442698, 0.0315201, -0.896116, -25.3801, -63, 19.543 )
 
 [node name="LowerTunnels" parent="." instance=ExtResource( 9 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 13.255, -63.9322, 47.696 )
@@ -285,11 +642,39 @@ shape = SubResource( 1 )
 ] instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.912601, -2.07769, -0.0692005 )
 
+[node name="SECRETONE5" type="Area" parent="." groups=[
+"Interact",
+]]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 22.6308, -61.9223, 49.7126 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="SecretThree" parent="SECRETONE5" instance=ExtResource( 23 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.933117, -0.9781, -0.389347 )
+
+[node name="CollisionSECRETONE" type="CollisionShape" parent="SECRETONE5" groups=[
+"Secret",
+]]
+shape = SubResource( 1 )
+
 [node name="ColSecretFloor" type="CollisionShape" parent="." groups=[
 "Secret",
 ]]
-transform = Transform( 3.55271e-15, 1, 4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1, 0, -4.37114e-08, 2.76151, -64.0287, 42.6675 )
+transform = Transform( 3.55271e-15, 1, 4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1, 0, -4.37114e-08, 2.7604, -63.9807, 42.6676 )
 shape = SubResource( 1 )
+
+[node name="SecretTeleport" type="Area" parent="."]
+transform = Transform( 3.55271e-15, 1, 4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1, 0, -4.37114e-08, 2.7604, -63.9807, 42.6676 )
+script = ExtResource( 20 )
+
+[node name="CollisionShape" type="CollisionShape" parent="SecretTeleport"]
+transform = Transform( 1, 0, 0, 0, 1, 7.17752e-23, 0, 0, 1, -1.13182, 0.192623, -1.40069 )
+shape = SubResource( 2 )
+
+[node name="Spatial" type="Spatial" parent="SecretTeleport"]
+transform = Transform( 1, 0, 0, 0, 1, 7.17752e-23, 0, 0, 1, -11.7991, -30.7209, 6.17773 )
 
 [node name="SECRETONE3" type="Area" parent="." groups=[
 "Interact",
@@ -300,17 +685,23 @@ script = ExtResource( 19 )
 [node name="CollisionSECRETONE" type="CollisionShape" parent="SECRETONE3" groups=[
 "Secret",
 ]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12222, -0.369207, -0.703136 )
+transform = Transform( 1, 0, 0, 0, 1, 1.57356e-28, 0, 0, 1, 1.09521, -0.382778, -0.6432 )
 shape = SubResource( 1 )
 
 [node name="SECRETTWO" parent="SECRETONE3" instance=ExtResource( 16 )]
 transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, -0.901436, 1.10962, -1.20998 )
 
+[node name="SecretCeiling" type="CollisionShape" parent="." groups=[
+"Secret",
+]]
+transform = Transform( 1.91069e-15, 1, 4.37114e-08, 4.37114e-08, 4.37114e-08, -1, -1, 3.82137e-15, -4.37114e-08, -30.0215, -58.9894, 47.5692 )
+shape = SubResource( 1 )
+
 [node name="SECRETONE4" type="Area" parent="." groups=[
 "Interact",
 ]]
 transform = Transform( 1.91069e-15, 1, 4.37114e-08, 4.37114e-08, 4.37114e-08, -1, -1, 3.82137e-15, -4.37114e-08, -29.8866, -60.1281, 47.8114 )
-script = SubResource( 3 )
+script = ExtResource( 22 )
 
 [node name="CollisionSECRETONE" type="CollisionShape" parent="SECRETONE4" groups=[
 "Secret",
@@ -318,26 +709,32 @@ script = SubResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.242199, -0.51074, -0.661037 )
 shape = SubResource( 1 )
 
-[node name="Secrettwo" parent="SECRETONE4" instance=ExtResource( 16 )]
+[node name="SECRETTWO" parent="SECRETONE4" instance=ExtResource( 16 )]
 transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, -0.901436, 1.10962, -1.20998 )
 
 [node name="Platform" parent="." instance=ExtResource( 17 )]
-transform = Transform( -3.0598e-08, 0, -0.7, 0, 0.7, 0, 0.7, 0, -3.0598e-08, -4.90801, -63.312, 62.81 )
+transform = Transform( -3.0598e-08, 0, -0.7, 0, 0.7, 0, 0.7, 0, -3.0598e-08, -4.90808, -63.312, 59.8433 )
+script = ExtResource( 21 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Platform"]
-"anims/Platform 1" = SubResource( 4 )
+playback_speed = 0.5
+"anims/Platform 1" = SubResource( 3 )
 
 [node name="Platform2" parent="." instance=ExtResource( 17 )]
-transform = Transform( -3.0598e-08, 0, -0.7, 0, 0.7, 0, 0.7, 0, -3.0598e-08, -10, -63.312, 57.4 )
+transform = Transform( -3.0598e-08, 0, -0.7, 0, 0.7, 0, 0.7, 0, -3.0598e-08, -10, -63.312, 58.7064 )
+script = ExtResource( 21 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Platform2"]
-"anims/Platform 1" = SubResource( 5 )
+playback_speed = 0.5
+"anims/Platform 1" = SubResource( 4 )
 
 [node name="Platform3" parent="." instance=ExtResource( 17 )]
-transform = Transform( -0.7, 0, 6.11959e-08, 0, 0.7, 0, -6.11959e-08, 0, -0.7, -15.1255, -63.312, 61.96 )
+transform = Transform( -0.7, 0, 6.11959e-08, 0, 0.7, 0, -6.11959e-08, 0, -0.7, -18.7433, -63.312, 61.9596 )
+script = ExtResource( 21 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Platform3"]
-"anims/Platform 1" = SubResource( 6 )
+playback_speed = 0.5
+"anims/Platform 1" = SubResource( 5 )
 
 [node name="Sections" type="Node" parent="."]
 
@@ -360,68 +757,76 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 18.0199
 
 [node name="CollisionShape33" type="CollisionShape" parent="."]
 transform = Transform( -1, -2.84859e-14, 8.74228e-08, 0, -1, -3.25841e-07, 8.74228e-08, -3.25841e-07, 1, 18.1229, 4.98483, 42.6567 )
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 
 [node name="CollisionShape34" type="CollisionShape" parent="."]
 transform = Transform( -1, -2.84859e-14, 8.74228e-08, -6.18172e-08, -0.707107, -0.707107, 6.18172e-08, -0.707107, 0.707107, 18.1322, 4.12269, 48.5082 )
-shape = SubResource( 8 )
+shape = SubResource( 7 )
 
 [node name="CollisionShape35" type="CollisionShape" parent="."]
 transform = Transform( -1, -2.84859e-14, 8.74228e-08, -8.74228e-08, 3.57628e-07, -1, 0, -1, -3.57628e-07, 18.1322, -2.79176, 52.2676 )
-shape = SubResource( 9 )
+shape = SubResource( 8 )
 
 [node name="CollisionShape40" type="CollisionShape" parent="."]
 transform = Transform( -1, -2.84859e-14, 8.74228e-08, -8.74228e-08, 3.57628e-07, -1, 0, -1, -3.57628e-07, 18.1322, -43.9747, 52.2676 )
-shape = SubResource( 10 )
+shape = SubResource( 9 )
 
 [node name="CollisionShape36" type="CollisionShape" parent="."]
 transform = Transform( 4.37114e-08, -1, -3.57628e-07, -8.74228e-08, 3.57628e-07, -1, 1, 4.37114e-08, -8.74228e-08, 22.9775, -6.31926, 47.2175 )
-shape = SubResource( 11 )
+shape = SubResource( 10 )
 
 [node name="CollisionShape39" type="CollisionShape" parent="."]
 transform = Transform( 4.37114e-08, -1, -3.57628e-07, -8.74228e-08, 3.57628e-07, -1, 1, 4.37114e-08, -8.74228e-08, 22.9775, -43.4062, 47.2175 )
-shape = SubResource( 12 )
+shape = SubResource( 11 )
+
+[node name="CollisionShape91" type="CollisionShape" parent="."]
+transform = Transform( 4.37114e-08, -1, -3.57628e-07, -8.74228e-08, 3.57628e-07, -1, 1, 4.37114e-08, -8.74228e-08, 22.5386, -61.6143, 45.2175 )
+shape = SubResource( 77 )
 
 [node name="CollisionShape37" type="CollisionShape" parent="."]
 transform = Transform( 1, 8.74228e-08, -8.74227e-08, -8.74228e-08, 3.57628e-07, -1, -8.74228e-08, 1, 3.57628e-07, 17.8656, -23.2821, 42.7997 )
-shape = SubResource( 13 )
+shape = SubResource( 12 )
 
 [node name="CollisionShape42" type="CollisionShape" parent="."]
 transform = Transform( 1, 8.74228e-08, -8.74227e-08, -8.74228e-08, 3.57628e-07, -1, -8.74228e-08, 1, 3.57628e-07, 17.8656, -54.869, 42.7997 )
-shape = SubResource( 14 )
+shape = SubResource( 13 )
 
 [node name="CollisionShape38" type="CollisionShape" parent="."]
 transform = Transform( -1.31134e-07, 1, 3.57628e-07, -8.74228e-08, 3.57628e-07, -1, -1, -1.31134e-07, 8.74227e-08, 14.3354, -27.1278, 47.7246 )
-shape = SubResource( 15 )
+shape = SubResource( 14 )
 
 [node name="CollisionShape43" type="CollisionShape" parent="."]
 transform = Transform( -1.31134e-07, 1, 3.57628e-07, -8.74228e-08, 3.57628e-07, -1, -1, -1.31134e-07, 8.74227e-08, 13.0046, -56.0638, 47.414 )
-shape = SubResource( 16 )
+shape = SubResource( 15 )
 
 [node name="CollisionShape44" type="CollisionShape" parent="."]
 transform = Transform( -1.31134e-07, 1, 3.57628e-07, -8.74228e-08, 3.57628e-07, -1, -1, -1.31134e-07, 8.74227e-08, 13.3463, -55.7997, 47.414 )
-shape = SubResource( 17 )
+shape = SubResource( 16 )
 
 [node name="CollisionDoor" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8632, 1.36912, 36.9658 )
-shape = SubResource( 18 )
+shape = SubResource( 17 )
 script = ExtResource( 13 )
 
 [node name="Button" type="Area" parent="CollisionDoor" groups=[
 "Interact",
 ]]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.644, 0, 0 )
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.64367, 0, -0.331245 )
 script = ExtResource( 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="CollisionDoor/Button"]
-shape = SubResource( 19 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.27773, 0 )
+shape = SubResource( 18 )
 
-[node name="MeshInstance" type="MeshInstance" parent="CollisionDoor/Button"]
-mesh = SubResource( 20 )
-material/0 = null
+[node name="switchIsOff" parent="CollisionDoor/Button" instance=ExtResource( 25 )]
+transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0, 1.45241, -0.56897 )
+
+[node name="switchIsOn" parent="CollisionDoor/Button" instance=ExtResource( 24 )]
+transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0, 0, -0.59951 )
+visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionDoor/Button"]
-anims/buttonOne = SubResource( 21 )
+anims/buttonOne = SubResource( 20 )
 
 [node name="Button2" type="Area" parent="CollisionDoor" groups=[
 "Interact",
@@ -430,11 +835,18 @@ transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -4.08478, 0, -0.331245 )
 script = ExtResource( 11 )
 
 [node name="CollisionShape" type="CollisionShape" parent="CollisionDoor/Button2"]
-shape = SubResource( 19 )
+shape = SubResource( 18 )
 
-[node name="MeshInstance" type="MeshInstance" parent="CollisionDoor/Button2"]
-mesh = SubResource( 20 )
-material/0 = null
+[node name="switchIsOn" parent="CollisionDoor/Button2" instance=ExtResource( 24 )]
+transform = Transform( -3, 0, -4.52988e-07, 0, 3, 0, 4.52988e-07, 0, -3, -0.567785, -1.41943, 0.144936 )
+visible = false
+
+[node name="switchIsOff" parent="CollisionDoor/Button2" instance=ExtResource( 25 )]
+transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, -0.542442, 0, 0.0817947 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionDoor/Button2"]
+anims/buttonOne = SubResource( 88 )
+anims/buttonTwo = SubResource( 91 )
 
 [node name="Button3" type="Area" parent="CollisionDoor" groups=[
 "Interact",
@@ -443,29 +855,110 @@ transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0847816, 5, -0.331245
 script = ExtResource( 12 )
 
 [node name="CollisionShape" type="CollisionShape" parent="CollisionDoor/Button3"]
-shape = SubResource( 19 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.231155, -0.511115, 0 )
+shape = SubResource( 18 )
 
-[node name="MeshInstance" type="MeshInstance" parent="CollisionDoor/Button3"]
-mesh = SubResource( 20 )
-material/0 = null
+[node name="switchIsOff" parent="CollisionDoor/Button3" instance=ExtResource( 26 )]
+transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0.0672722, -0.520273, 0.176483 )
+
+[node name="switchIsOn" parent="CollisionDoor/Button3" instance=ExtResource( 24 )]
+transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0.0672722, -2, 0.052887 )
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionDoor/Button3"]
+anims/buttonOne = SubResource( 89 )
+anims/buttonThree = SubResource( 90 )
 
 [node name="Door" parent="CollisionDoor" instance=ExtResource( 14 )]
 transform = Transform( -1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, -1, 1.82668, -1.24219, 0.09515 )
 
+[node name="CollisionDoor2" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1.8, 0, -7.86805e-08, -26.9681, -62.6309, 47.9658 )
+shape = SubResource( 17 )
+script = ExtResource( 13 )
+
+[node name="Door" parent="CollisionDoor2" instance=ExtResource( 14 )]
+transform = Transform( -1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, -1, 1.82668, -1.24219, 0.09515 )
+
+[node name="Button" type="Area" parent="CollisionDoor2" groups=[
+"Interact",
+]]
+transform = Transform( -2.42841e-09, 0, -0.277778, 0, 0.5, 0, 0.5, 0, -3.15693e-08, 3.79081, 0, -8.97593 )
+script = ExtResource( 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="CollisionDoor2/Button"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.27773, 0 )
+shape = SubResource( 18 )
+
+[node name="switchIsOff" parent="CollisionDoor2/Button" instance=ExtResource( 25 )]
+transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0, 1.45241, -0.56897 )
+
+[node name="switchIsOn" parent="CollisionDoor2/Button" instance=ExtResource( 24 )]
+transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0, 0, -0.59951 )
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionDoor2/Button"]
+anims/buttonOne = SubResource( 92 )
+
+[node name="Button2" type="Area" parent="CollisionDoor2" groups=[
+"Interact",
+]]
+transform = Transform( 0.277778, 0, 9.71365e-09, 0, 0.5, 0, 9.71364e-09, 0, 0.5, -9.49905, 4.97913, 1.44596 )
+script = ExtResource( 11 )
+
+[node name="CollisionShape" type="CollisionShape" parent="CollisionDoor2/Button2"]
+shape = SubResource( 18 )
+
+[node name="switchIsOn" parent="CollisionDoor2/Button2" instance=ExtResource( 24 )]
+transform = Transform( -3, 0, -4.52988e-07, 0, 3, 0, 4.52988e-07, 0, -3, -0.567785, -1.41943, 0.144936 )
+visible = false
+
+[node name="switchIsOff" parent="CollisionDoor2/Button2" instance=ExtResource( 25 )]
+transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, -0.542442, 0, 0.0817947 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionDoor2/Button2"]
+anims/buttonOne = SubResource( 93 )
+anims/buttonTwo = SubResource( 94 )
+
+[node name="Button3" type="Area" parent="CollisionDoor2" groups=[
+"Interact",
+]]
+transform = Transform( 0.277778, 0, 9.71364e-09, 0, 0.5, 0, 9.71364e-09, 0, 0.5, -0.0471001, 5, -0.331245 )
+script = ExtResource( 12 )
+
+[node name="CollisionShape" type="CollisionShape" parent="CollisionDoor2/Button3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.231155, -0.511115, 0 )
+shape = SubResource( 18 )
+
+[node name="switchIsOff" parent="CollisionDoor2/Button3" instance=ExtResource( 26 )]
+transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0.0672722, -0.520273, 0.176483 )
+
+[node name="switchIsOn" parent="CollisionDoor2/Button3" instance=ExtResource( 24 )]
+transform = Transform( -3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0.0672722, -2, 0.052887 )
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionDoor2/Button3"]
+anims/buttonOne = SubResource( 95 )
+anims/buttonThree = SubResource( 96 )
+
 [node name="CollisionShape13" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2073, 5.17315, 25.8084 )
-shape = SubResource( 22 )
+shape = SubResource( 21 )
 
 [node name="CollisionShape14" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2097, 0.523645, 35.8243 )
-shape = SubResource( 23 )
+shape = SubResource( 22 )
 
 [node name="CollisionShape17" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8512, 2.976, 26.3011 )
+shape = SubResource( 23 )
+
+[node name="CollisionShape90" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7132, -58.6221, 62.3401 )
 shape = SubResource( 24 )
 
 [node name="CollisionShape45" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5094, -63.915, 48 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5094, -63.915, 43 )
 shape = SubResource( 25 )
 
 [node name="CollisionShape60" type="CollisionShape" parent="."]
@@ -523,6 +1016,10 @@ shape = SubResource( 34 )
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -15.2356, -63.915, 29.6349 )
 shape = SubResource( 35 )
 
+[node name="CollisionShape74" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -15.2039, -54.9619, 29.6339 )
+shape = SubResource( 35 )
+
 [node name="CollisionShape48" type="CollisionShape" parent="."]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.26935, -63.915, 56.5556 )
 shape = SubResource( 36 )
@@ -530,6 +1027,74 @@ shape = SubResource( 36 )
 [node name="CollisionShape51" type="CollisionShape" parent="."]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.34727, -63.915, 51.5556 )
 shape = SubResource( 37 )
+
+[node name="CollisionShape92" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 26.8569, -61.0021, 47.8081 )
+shape = SubResource( 78 )
+
+[node name="CollisionShape93" type="CollisionShape" parent="."]
+transform = Transform( 1.91069e-15, -1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -1, 1, 0, -4.37114e-08, 29.0123, -62.289, 46.8683 )
+shape = SubResource( 79 )
+
+[node name="CollisionShape94" type="CollisionShape" parent="."]
+transform = Transform( 1.91069e-15, -1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -1, 1, 0, -4.37114e-08, 26.0123, -62.289, 45.8683 )
+shape = SubResource( 80 )
+
+[node name="CollisionShape95" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 26.0123, -62.289, 50.8683 )
+shape = SubResource( 81 )
+
+[node name="CollisionShape107" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 24.4081, -62.289, 48.8683 )
+shape = SubResource( 87 )
+
+[node name="CollisionShape108" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 24.4924, -62.289, 48.8683 )
+shape = SubResource( 87 )
+
+[node name="CollisionShape96" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 28.0123, -61.289, 33.8683 )
+shape = SubResource( 82 )
+
+[node name="CollisionShape97" type="CollisionShape" parent="."]
+transform = Transform( -8.74228e-08, 1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -1, -8.74228e-08, 4.37114e-08, 23.0123, -61.289, 37.8683 )
+shape = SubResource( 82 )
+
+[node name="CollisionShape98" type="CollisionShape" parent="."]
+transform = Transform( -8.74228e-08, 1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -1, -8.74228e-08, 4.37114e-08, 32.0123, -61.289, 37.8683 )
+shape = SubResource( 82 )
+
+[node name="CollisionShape99" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 31.0123, -61.289, 42.8683 )
+shape = SubResource( 83 )
+
+[node name="CollisionShape100" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 24.0123, -61.289, 42.8683 )
+shape = SubResource( 83 )
+
+[node name="CollisionShape101" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 27.4679, -59.8494, 42.8646 )
+shape = SubResource( 84 )
+
+[node name="CollisionShape102" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 23.5408, -62.341, 42.2626 )
+shape = SubResource( 85 )
+
+[node name="CollisionShape103" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 31.5408, -62.341, 42.2626 )
+shape = SubResource( 85 )
+
+[node name="CollisionShape104" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 31.5408, -62.341, 34.2626 )
+shape = SubResource( 85 )
+
+[node name="CollisionShape105" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 27.5408, -59.0884, 38.2626 )
+shape = SubResource( 86 )
+
+[node name="CollisionShape106" type="CollisionShape" parent="."]
+transform = Transform( 1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 27.5408, -59.0884, 38.2626 )
+shape = SubResource( 86 )
 
 [node name="CollisionShape52" type="CollisionShape" parent="."]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.3473, -63.915, 51.5556 )
@@ -649,7 +1214,7 @@ shape = SubResource( 54 )
 
 [node name="CollisionShape27" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8632, 6.36912, 36.9658 )
-shape = SubResource( 18 )
+shape = SubResource( 17 )
 
 [node name="CollisionShape28" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.7295, 4.36912, 23.9288 )
@@ -678,4 +1243,101 @@ shape = SubResource( 60 )
 [node name="CollisionShape32" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.6486, 2.01728, 24.8558 )
 shape = SubResource( 61 )
+
+[node name="CollisionShape41" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -27.7334, -59.5259, 30.696 )
+shape = SubResource( 62 )
+
+[node name="CollisionShape68" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.80881, -61.58, 19.7125 )
+shape = SubResource( 63 )
+
+[node name="CollisionShape69" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5687, -59.4625, 18.4463 )
+shape = SubResource( 64 )
+
+[node name="CollisionShape70" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -28.7297, -59.3544, 29.9699 )
+shape = SubResource( 65 )
+
+[node name="CollisionShape72" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.77386, -59.4625, 27.1527 )
+shape = SubResource( 66 )
+
+[node name="CollisionShape73" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.77386, -55.8638, 38.3981 )
+shape = SubResource( 67 )
+
+[node name="CollisionShape77" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.28727, -60.9847, 42.6936 )
+shape = SubResource( 68 )
+
+[node name="CollisionShape78" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.28727, -60.9847, 52.6936 )
+shape = SubResource( 68 )
+
+[node name="CollisionShape71" type="CollisionShape" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -14.78, -59.4625, 40.8329 )
+shape = SubResource( 69 )
+
+[node name="CollisionShape76" type="CollisionShape" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -14.78, -59.4625, 40.8329 )
+shape = SubResource( 69 )
+
+[node name="CollisionShape75" type="CollisionShape" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -13.0751, -59.4625, 53.8329 )
+shape = SubResource( 70 )
+
+[node name="CollisionShape79" type="CollisionShape" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -13.0751, -61.9602, 54.7408 )
+shape = SubResource( 71 )
+
+[node name="CollisionShape80" type="CollisionShape" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -13.0751, -61.9602, 69.7408 )
+shape = SubResource( 71 )
+
+[node name="CollisionShape81" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -23.6598, -61.9602, 62.2432 )
+shape = SubResource( 72 )
+
+[node name="CollisionShape82" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.72885, -61.9602, 64.2432 )
+shape = SubResource( 73 )
+
+[node name="CollisionShape83" type="CollisionShape" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.72885, -61.9602, 64.2432 )
+shape = SubResource( 73 )
+
+[node name="CollisionShape84" type="CollisionShape" parent="."]
+transform = Transform( -3.0598e-08, 0, -0.7, 0, 0.7, 0, 0.7, 0, -3.0598e-08, -7.27442, -61.8756, 60.1151 )
+shape = SubResource( 74 )
+
+[node name="CollisionShape85" type="CollisionShape" parent="."]
+transform = Transform( -3.0598e-08, 0, -0.7, 0, 0.7, 0, 0.7, 0, -3.0598e-08, -12.2744, -61.8756, 64.1151 )
+shape = SubResource( 74 )
+
+[node name="CollisionShape86" type="CollisionShape" parent="."]
+transform = Transform( -0.7, 0, 6.1196e-08, 0, 0.7, 0, -6.1196e-08, 0, -0.7, -17.974, -61.6861, 58.1151 )
+shape = SubResource( 75 )
+
+[node name="CollisionShape87" type="CollisionShape" parent="."]
+transform = Transform( -0.7, 0, 6.1196e-08, 0, 0.7, 0, -6.1196e-08, 0, -0.7, -32.826, -61.3096, 47.67 )
+shape = SubResource( 76 )
+
+[node name="CollisionShape88" type="CollisionShape" parent="."]
+transform = Transform( 9.17939e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, 9.17939e-08, -29.826, -61.3096, 44.67 )
+shape = SubResource( 76 )
+
+[node name="CollisionShape89" type="CollisionShape" parent="."]
+transform = Transform( 9.17939e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, 9.17939e-08, -29.826, -61.3096, 50.67 )
+shape = SubResource( 76 )
+
+[node name="End" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -31.8619, -61.3452, 47.0822 )
+script = ExtResource( 27 )
+
+[node name="CollisionShape" type="CollisionShape" parent="End"]
+shape = SubResource( 97 )
+[connection signal="body_entered" from="SecretTeleport" to="SecretTeleport" method="_on_SecretTeleport_body_entered"]
 [connection signal="body_entered" from="Area" to="Area" method="_on_Area_body_entered"]
+[connection signal="body_entered" from="End" to="End" method="_on_End_body_entered"]

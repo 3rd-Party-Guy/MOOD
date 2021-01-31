@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sounds/Guitar Licks/SFX/12-1-Audio 30.wav" type="AudioStream" id=2]
@@ -9,11 +9,12 @@
 [ext_resource path="res://Healthbar/Top.png" type="Texture" id=7]
 [ext_resource path="res://Healthbar/Background.png" type="Texture" id=8]
 [ext_resource path="res://Healthbar/Middle.png" type="Texture" id=9]
-[ext_resource path="res://Scenes/Healthbar.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/Healthbar.gd" type="Script" id=10]
 [ext_resource path="res://Font/FONT.tres" type="DynamicFont" id=11]
 [ext_resource path="res://Coin.png" type="Texture" id=12]
 [ext_resource path="res://Scenes/DashGUI.gd" type="Script" id=13]
 [ext_resource path="res://Sounds/Player Death Sound.wav" type="AudioStream" id=14]
+[ext_resource path="res://Scenes/Hand.gd" type="Script" id=15]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Score"
@@ -212,6 +213,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.5 )
 fov = 100.0
 
+[node name="Hand" type="Spatial" parent="Head/Camera"]
+script = ExtResource( 15 )
+sway_treshhold = 10
+sway_lerp = 4
+sway_left = Vector3( 0, 0.2, 0 )
+sway_right = Vector3( 0, -0.2, 0 )
+
 [node name="RayCastRifle" type="RayCast" parent="Head/Camera"]
 cast_to = Vector3( 0, 0, -20 )
 collide_with_areas = true
@@ -248,6 +256,8 @@ collide_with_areas = true
 [node name="UI" type="ViewportContainer" parent="Head/Camera"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -1440.0
+margin_bottom = -810.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -365,6 +375,27 @@ texture = ExtResource( 12 )
 [node name="Sprite3" type="Sprite" parent="Head/Camera/UI/DashGUI"]
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 12 )
+
+[node name="End" type="ColorRect" parent="Head/Camera/UI"]
+visible = false
+margin_right = 480.0
+margin_bottom = 270.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Head/Camera/UI/End"]
+margin_left = 152.0
+margin_top = 37.0
+margin_right = 301.0
+margin_bottom = 159.0
+custom_fonts/normal_font = ExtResource( 11 )
+text = "Thank you for playing!
+
+Expect Updates!
+
+Join our Discord (on Itch) to follow this game's development and help out!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Kick" type="MeshInstance" parent="Head/Camera"]
 transform = Transform( 0.0625, -0.00535898, 0.077274, 0.0647048, 0.0772741, 0, -0.233253, 0.02, 0.0207055, -0.4, -0.57, -0.4 )

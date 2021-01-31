@@ -6,7 +6,7 @@ onready var weaponInstance = weapon.instance()
 func _on_WeaponPickup_body_entered(body):
 	if body.is_in_group("Player"):
 		body.Flash("Q & E")
-		body.get_node("Head/Camera").add_child(weaponInstance)
+		body.get_node("Head/Camera/Hand").add_child(weaponInstance)
 		body.curWeapon = 1
 		body.ChangeWeapon(1)
 		

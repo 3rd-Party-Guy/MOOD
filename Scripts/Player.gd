@@ -94,11 +94,13 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("scroll_up"):
 		curWeapon += 1
-		curWeapon = clamp(curWeapon, 0, 3)
+		if curWeapon == 4:
+			curWeapon = 0
 		ChangeWeapon(curWeapon)
 	elif Input.is_action_just_pressed("scroll_down"):
 		curWeapon -= 1
-		curWeapon = clamp(curWeapon, 0, 3)
+		if curWeapon == -1:
+			curWeapon = 3
 		ChangeWeapon(curWeapon)
 	if STATE != DEAD:
 			
@@ -127,7 +129,8 @@ func _process(delta):
 			dashTimer.start()
 		dashGUI.UpdateDash(dashes)
 	
-	velocity = move_and_slide(velocity, Vector3.UP)
+	var snap = Vector3.DOWN * 16
+	velocity = move_and_slide_with_snap(velocity, snap, Vector3.UP)
 	
 # warning-ignore:return_value_discarded
 	move_and_slide(fall, Vector3.UP)
@@ -255,3 +258,7 @@ func Flash(msg):
 
 func _on_FlashTimer_timeout():
 	flashLabel.visible = false
+
+
+func _on_Button_pressed():
+	get_tree().quit()

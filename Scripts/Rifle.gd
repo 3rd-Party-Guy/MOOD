@@ -13,8 +13,8 @@ var MIN_POINTS = 450
 var MAX_POINTS = 700
 
 onready var animPlayer = $"AnimationPlayer"
-onready var raycast = $"../RayCastRifle"
-onready var player = $"../../../"
+onready var raycast = $"../../RayCastRifle"
+onready var player = $"../../../../"
 onready var audio = $Audio
 
 onready var ammoStat = player.find_node("Ammo")
@@ -27,15 +27,15 @@ onready var blood = preload("res://Scenes/BloodSplatter.tscn")
 func _ready():
 	defCamTranslation = camera.translation
 # warning-ignore:return_value_discarded
-	$"../../../".connect("shootRifle", self, "fire")
+	player.connect("shootRifle", self, "fire")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showShotgun", self, "hide")
+	player.connect("showShotgun", self, "hide")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showRifle", self, "show")
+	player.connect("showRifle", self, "show")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showLauncher", self, "hide")
+	player.connect("showLauncher", self, "hide")
 # warning-ignore:return_value_discarded
-	$"../../../".connect("showNone", self, "hide")
+	player.connect("showNone", self, "hide")
 
 func fire():
 	if not animPlayer.is_playing() and ammo != 0:
@@ -70,7 +70,7 @@ func fire():
 				b.get_node("Particles").emitting = true
 				
 				target.health -= damage
-				$"../../../Score".ChangeScore(rand_range(MIN_POINTS, MAX_POINTS))
+				player.get_node("Score").ChangeScore(rand_range(MIN_POINTS, MAX_POINTS))
 			elif target.is_in_group("Interact"):
 				target.onInteracted(player)
 				

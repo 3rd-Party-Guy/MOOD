@@ -4,11 +4,8 @@
 
 [node name="rifleRatManV11" instance=ExtResource( 1 )]
 
-[node name="Skeleton" parent="Armature" index="0"]
-bones/11/bound_children = [ NodePath("BoneAttachment") ]
-
 [node name="BoneAttachment" parent="Armature/Skeleton" index="0"]
-transform = Transform( 0.994136, 0.0915408, 0.0575614, 0.0406502, 0.176893, -0.98339, -0.100202, 0.979964, 0.172135, -0.0440256, 0.123944, 0.289256 )
+transform = Transform( 0.991744, 0.0840086, 0.0968805, 0.0968807, -0.985835, -0.136898, 0.0840077, 0.145154, -0.985835, -0.394181, -0.0572982, 0.0193638 )
 
 [node name="thompson" parent="Armature/Skeleton/BoneAttachment" index="0"]
 transform = Transform( -0.991744, 0.0817663, 0.0987808, -0.0840077, 0.167713, -0.98225, -0.0968817, -0.982439, -0.15946, 0.0293845, 0.177533, -0.00164064 )

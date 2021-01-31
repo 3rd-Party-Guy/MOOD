@@ -16,8 +16,8 @@ export var health = 30
 export var damage = 5
 var target
 
-export var sightRange = 40
-export var minDistance = 4
+export var sightRange :int
+export var minDistance : int
 
 export var speed = 10
 var velocity
@@ -27,6 +27,7 @@ onready var eyes =  $Eyes
 onready var shootTimer = $ShootTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
+onready var audioAlert = $AudioAlert
 onready var anim = $fatRatManV15/AnimationPlayer
 
 onready var projectile = preload("res://Scenes/EnemyProjectileBullet.tscn")
@@ -97,6 +98,7 @@ func move_to(target_pos):
 func _on_SightRange_body_entered(body):
 	if body.is_in_group("Player") and not state == KICKED:
 		state = ALERT
+		audioAlert.play()
 		target = body
 		shootTimer.start()
 		navigationTimer.start()

@@ -5,4 +5,4 @@
 [node name="ratManV2" instance=ExtResource( 1 )]
 
 [node name="BoneAttachment" parent="Armature/Skeleton" index="0"]
-transform = Transform( 0.79845, 0.594874, -0.0927512, -0.478786, 0.53398, -0.69687, -0.365022, 0.600824, 0.711174, -0.336067, 0.23949, 0.266818 )
+transform = Transform( 0.79845, 0.594874, -0.0927505, -0.478786, 0.53398, -0.69687, -0.365023, 0.600824, 0.711174, -0.336063, 0.239488, 0.266816 )

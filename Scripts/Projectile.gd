@@ -21,7 +21,7 @@ func _physics_process(_delta):
 func _on_Area_body_entered(body):
 	if body.is_in_group("Enemy"):
 		body.health -= DAMAGE
-		$"../../../../Score".ChangeScore(rand_range(MIN_POINTS, MAX_POINTS))
+		$"../../../../../Score".ChangeScore(rand_range(MIN_POINTS, MAX_POINTS))
 		audio.play()
 	elif not body.is_in_group("Player"):
 		audio.play()

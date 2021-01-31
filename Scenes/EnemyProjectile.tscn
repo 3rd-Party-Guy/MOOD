@@ -1,18 +1,19 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/EnemyProjectile.gd" type="Script" id=1]
 [ext_resource path="res://Objects/Enemies/Launcher/LauncherEnemy.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Sounds/EnemyDie.wav" type="AudioStream" id=3]
+[ext_resource path="res://Sounds/SFX/Enemies/Enemy Death 1.wav" type="AudioStream" id=3]
+[ext_resource path="res://Sounds/SFX/Enemies/Enemy Alert 2.wav" type="AudioStream" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
-height = 1.5
+height = 0.684082
 
 [sub_resource type="SphereShape" id=2]
 margin = 0.001
 radius = 20.0
 
-[node name="Enemy" type="KinematicBody" groups=[
+[node name="EnemyProjectile" type="KinematicBody" groups=[
 "Enemy",
 ]]
 script = ExtResource( 1 )
@@ -23,6 +24,7 @@ enabled = true
 cast_to = Vector3( 10, 0, 0 )
 
 [node name="fatRatManV15" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
@@ -47,6 +49,11 @@ wait_time = 0.5
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+volume_db = -5.0
+
+[node name="AudioAlert" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "Enemies"
 [connection signal="body_entered" from="SightRange" to="." method="_on_SightRange_body_entered"]
 [connection signal="body_exited" from="SightRange" to="." method="_on_SightRange_body_exited"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
