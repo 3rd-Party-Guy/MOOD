@@ -65,7 +65,7 @@ func fire():
 				
 				b.global_transform.origin = raycast.get_collision_point()
 				b.global_transform.basis = target.global_transform.basis
-				#b.get_node("Particles").emitting = true
+				b.get_node("Particles").emitting = true
 				
 				target.health -= damage
 				player.get_node("Score").ChangeScore(rand_range(MIN_POINTS, MAX_POINTS))

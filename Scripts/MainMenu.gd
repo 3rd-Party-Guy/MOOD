@@ -10,13 +10,7 @@ func _input(event):
 	if event is InputEventKey and event.pressed:
 		print("PLAYER STARTED GAME")
 		Start()
-	else:
-		Test()
 
 func Start():
 	get_tree().change_scene(scene)
-	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
-
-func Test():
-	get_tree().change_scene(testScene)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)

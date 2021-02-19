@@ -29,7 +29,7 @@ onready var shootTimer = $ShootTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
 onready var audioAlert = $AudioAlert
-onready var anim = $rifleRatManV15/AnimationPlayer
+onready var anim = $rifleRatManV17/AnimationPlayer
 
 onready var navigation = get_parent().get_parent()
 
@@ -65,9 +65,8 @@ func _process(_delta):
 		DEAD:
 			print("Enemy has died!")
 			anim.play("deathShit")
-			anim.playback_speed = 12
 			audio.play()
-			if anim.current_animation_position > 12:
+			if anim.current_animation_position > 0.6:
 				queue_free()
 		IDLE:
 			if not anim.current_animation == "idleRifle":
@@ -79,9 +78,8 @@ func _process(_delta):
 			look_at(target.global_transform.origin, Vector3.UP)
 			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
 			rotate_z(deg2rad(eyes.rotation.z * TURN_SPEED))
-			if not anim.current_animation == "walkAndAim":
-				anim.play("walkAndAim")
-				anim.playback_speed = 12
+			if not anim.current_animation == "walkAndShoot":
+				anim.play("walkAndShoot")
 			pass
 		KICKED:
 			var collide = move_and_collide(velocity * 5000)
@@ -94,9 +92,8 @@ func _process(_delta):
 			look_at(target.global_transform.origin, Vector3.UP)
 			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
 			rotate_z(deg2rad(eyes.rotation.z * TURN_SPEED))
-			if not anim.current_animation == "walkAndAim":
-				anim.play("walkAndAim")
-				anim.playback_speed = 12
+			if not anim.current_animation == "walkAndShoot":
+				anim.play("walkAndShoot")
 			pass
 		
 
@@ -128,7 +125,7 @@ func _on_ShootTimer_timeout():
 			if hit.is_in_group("Player"):
 				state = BERSERK
 				print("Player got hit.")
-				#hit.onDamage(damage)
+				hit.onDamage(damage)
 
 
 func _on_NavigationTimer_timeout():
