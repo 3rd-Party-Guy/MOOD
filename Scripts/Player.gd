@@ -65,10 +65,12 @@ onready var deathScreen = $DeathScreen
 
 signal damageTaken(dmg)
 
+signal shootDef
 signal shootRifle
 signal shootShotgun
 signal shootLauncher
 
+signal showDef
 signal showRifle
 signal showShotgun
 signal showLauncher
@@ -147,7 +149,7 @@ func _physics_process(delta):
 		
 		match curWeapon:
 			0:
-				pass
+				emit_signal("shootDef")
 			1:
 				emit_signal("shootRifle")
 			2:
@@ -176,13 +178,13 @@ func _physics_process(delta):
 func ChangeWeapon(weapon):
 	match weapon:
 		0:
-			rifleRay.enabled = false
+			rifleRay.enabled = true
 			for raycast in shotgunRay:
 				raycast.enabled = false
 			launcherRay.enabled = false
 			
-			weaponLabel.text = "None"
-			emit_signal("showNone")
+			weaponLabel.text = "Default Pistol"
+			emit_signal("showDef")
 		1:
 			rifleRay.enabled = true
 			for raycast in shotgunRay:

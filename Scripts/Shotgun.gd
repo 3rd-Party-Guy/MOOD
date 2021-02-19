@@ -28,6 +28,8 @@ func _ready():
 	defCamTranslation = camera.translation
 # warning-ignore:return_value_discarded
 	player.connect("shootShotgun", self, "fire")
+	
+	player.connect("showDef", self, "hide")
 # warning-ignore:return_value_discarded
 	player.connect("showRifle", self, "hide")
 # warning-ignore:return_value_discarded
