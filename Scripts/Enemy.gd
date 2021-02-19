@@ -29,7 +29,7 @@ onready var shootTimer = $ShootTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
 onready var audioAlert = $AudioAlert
-onready var anim = $rifleRatManV11/AnimationPlayer
+onready var anim = $rifleRatManV15/AnimationPlayer
 
 onready var navigation = get_parent().get_parent()
 
@@ -59,11 +59,16 @@ func _physics_process(_delta):
 
 func _process(_delta):
 	if health <= 0 and not audio.playing:
-		print("Enemy has died!")
-		audio.play()
 		state = DEAD
 	
 	match state:
+		DEAD:
+			print("Enemy has died!")
+			anim.play("deathShit")
+			anim.playback_speed = 12
+			audio.play()
+			if anim.current_animation_position > 12:
+				queue_free()
 		IDLE:
 			if not anim.current_animation == "idleRifle":
 				anim.play("idleRifle")
@@ -74,8 +79,9 @@ func _process(_delta):
 			look_at(target.global_transform.origin, Vector3.UP)
 			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
 			rotate_z(deg2rad(eyes.rotation.z * TURN_SPEED))
-			if not anim.current_animation == "walkRifle":
-				anim.play("walkRifle")
+			if not anim.current_animation == "walkAndAim":
+				anim.play("walkAndAim")
+				anim.playback_speed = 12
 			pass
 		KICKED:
 			var collide = move_and_collide(velocity * 5000)
@@ -88,8 +94,9 @@ func _process(_delta):
 			look_at(target.global_transform.origin, Vector3.UP)
 			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
 			rotate_z(deg2rad(eyes.rotation.z * TURN_SPEED))
-			if not anim.current_animation == "shootingRifle":
-				anim.play("shootingRifle")
+			if not anim.current_animation == "walkAndAim":
+				anim.play("walkAndAim")
+				anim.playback_speed = 12
 			pass
 		
 
@@ -99,34 +106,38 @@ func move_to(target_pos):
 
 func _on_SightRange_body_entered(body):
 	if body.is_in_group("Player") and state != KICKED:
-		state = ALERT
-		audioAlert.play()
-		target = body
-		shootTimer.start()
-		navigationTimer.start()
+		if state != DEAD:
+			state = ALERT
+			audioAlert.play()
+			target = body
+			shootTimer.start()
+			navigationTimer.start()
 
 
 func _on_SightRange_body_exited(body):
 	if body.is_in_group("Player") and state != KICKED:
 		shootTimer.stop()
-		state = IDLE
+		if state != DEAD:
+			state = IDLE
 
 
 func _on_ShootTimer_timeout():
-	if raycast.is_colliding():
-		var hit = raycast.get_collider()
-		if hit.is_in_group("Player"):
-			state = BERSERK
-			print("Player got hit.")
-			hit.onDamage(damage)
+	if state != DEAD:
+		if raycast.is_colliding():
+			var hit = raycast.get_collider()
+			if hit.is_in_group("Player"):
+				state = BERSERK
+				print("Player got hit.")
+				#hit.onDamage(damage)
 
 
 func _on_NavigationTimer_timeout():
-	move_to(player.global_transform.origin)
+	if state != DEAD:
+		move_to(player.global_transform.origin)
 
 
-func _on_Audio_finished():
-	queue_free()
+#func _on_Audio_finished():
+#	queue_free()''''
 
 func onKicked(pos):
 	velocity = -pos

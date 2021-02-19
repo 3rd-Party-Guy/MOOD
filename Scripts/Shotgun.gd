@@ -68,7 +68,7 @@ func fire():
 					
 					b.global_transform.origin = raycast.get_collision_point()
 					b.global_transform.basis = target.global_transform.basis
-					b.get_node("Particles").emitting = true
+					#b.get_node("Particles").emitting = true
 					#target.health -= maxDamage + ((transform.origin.distance_to(target.transform.origin) - 1) / (50 - 1) * (100 - 10) + 10)#TODO: divide damage between distance of player and enemy
 					var tempDmg = maxDamage + (-(transform.origin.distance_to(transform.origin)) * 4) #f(x) = 40+(-x)*4
 					
