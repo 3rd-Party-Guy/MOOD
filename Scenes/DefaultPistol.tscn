@@ -26,7 +26,7 @@ tracks/0/keys = {
 
 [sub_resource type="CubeMesh" id=4]
 
-[node name="Rifle" type="Spatial"]
+[node name="DefPistol" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.9, -0.5 )
 script = ExtResource( 1 )
 
