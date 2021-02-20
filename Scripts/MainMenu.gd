@@ -1,6 +1,7 @@
 extends Control
 
 var scene = "res://Scenes/Root.tscn"
+var testScene = "res://Scenes/TestScene.tscn"
 
 func _ready():
 	$RichTextLabel/AnimationPlayer.play("Start")
