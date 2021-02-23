@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sounds/Guitar Licks/SFX/12-1-Audio 30.wav" type="AudioStream" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Scenes/DashGUI.gd" type="Script" id=13]
 [ext_resource path="res://Sounds/Player Death Sound.wav" type="AudioStream" id=14]
 [ext_resource path="res://Scenes/Hand.gd" type="Script" id=15]
+[ext_resource path="res://Crosshair.tscn" type="PackedScene" id=16]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Score"
@@ -261,6 +262,12 @@ margin_bottom = -810.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Crosshair" parent="Head/Camera/UI" instance=ExtResource( 16 )]
+margin_left = 1.52588e-05
+margin_top = 0.0
+margin_right = 4.00002
+margin_bottom = 4.0
 
 [node name="Weapon" type="Label" parent="Head/Camera/UI"]
 margin_left = 15.0
