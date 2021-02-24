@@ -1,0 +1,151 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/EndlessLevel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://PSX Shader/shaders/dithers/bluenoise_128_128.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/RiflePickup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://PSX Shader/shaders/psx_dither_post.shader" type="Shader" id=7]
+[ext_resource path="res://Crosshair.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/LauncherPickup.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/ShotgunPickup.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/PauseScreen.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/DefPickup.tscn" type="PackedScene" id=14]
+
+[sub_resource type="NavigationMesh" id=1]
+vertices = PoolVector3Array( -24, 0.300413, -24, -22, 0.300413, -23, -20, 0.300413, -28, -19, 0.300413, -49, -29, 0.300413, -49, -26, 0.300413, -28, -10, 0.300413, -24, -8, 0.300413, -24, -6, 0.300413, -28, -9, 0.300413, -49, -13, 0.300413, -28, 5, 0.300413, -24, 7, 0.300413, -24, 9, 0.300413, -28, 11, 0.300413, -49, 1, 0.300413, -49, 2, 0.300413, -28, 24, 0.300413, -28, 30, 0.300413, -27, 31, 0.300413, -49, 21, 0.300413, -49, -6, 0.300413, -28, 2, 0.300413, -28, 1, 0.300413, -49, -9, 0.300413, -49, -49, 0.300413, -36, -49, 0.300413, -30, -33, 0.300413, -28, -26, 0.300413, -28, -29, 0.300413, -49, -39, 0.300413, -49, 17, 0.300413, -28, 19, 0.300413, -23, 22, 0.300413, -23, 24, 0.300413, -28, 21, 0.300413, -49, 17, 0.300413, -28, 21, 0.300413, -49, 11, 0.300413, -49, 9, 0.300413, -28, -39, 0.300413, -49, -49, 0.300413, -49, -49, 0.300413, -43, -49, 0.300413, -30, -49, 0.300413, -23, -35, 0.550413, -23, -33, 0.300413, -28, -13, 0.300413, -28, -9, 0.300413, -49, -19, 0.300413, -49, -20, 0.300413, -28, -39, 0.300413, -49, -49, 0.300413, -43, -49, 0.300413, -36, 29, 0.300413, -7, 29, 0.300413, -6, 32, 0.300413, -6, 34, 0.300413, -9, 49, 0.300413, -33, 49, 0.300413, -41, 40, 0.300413, -49, 31, 0.300413, -49, 30, 0.300413, -27, 44, 0.300413, -17, 49, 0.300413, -4, 49, 0.300413, -8, 45, 0.300413, -7, 44, 0.300413, -5, 34, 0.300413, -14, 34, 0.300413, -9, 42, 0.300413, -10, 42, 0.300413, -15, 44, 0.300413, -5, 45, 0.300413, -7, 42, 0.300413, -10, 31, 0.550413, -21, 28, 0.300413, -19, 28, 0.300413, -16, 34, 0.300413, -14, 49, 0.300413, -41, 49, 0.300413, -49, 40, 0.300413, -49, 34, 0.300413, -9, 32, 0.300413, -6, 34, 0.300413, -1, 42, 0.300413, -1, 44, 0.300413, -5, 42, 0.300413, -10, 34, 0.300413, -14, 42, 0.300413, -15, 44, 0.300413, -17, 30, 0.300413, -27, 31, 0.550413, -21, 30.5, 1.05041, -24, 44, 0.300413, -17, 49, 0.300413, -17, 49, 0.300413, -25, 44, 0.300413, -17, 49, 0.300413, -25, 49, 0.300413, -33, -24, 16.5504, -23, -20, 17.5504, -23, -20, 17.5504, -27, -25, 16.0504, -26, -11, 15.5504, -26, -10, 16.3004, -22, -6, 17.3004, -23, -6, 17.0504, -27, 4, 15.5504, -27, 5, 16.3004, -22, 9, 17.3004, -23, 9, 17.0504, -27, 19, 15.5504, -27, 19, 16.0504, -22, 24, 17.3004, -23, 24, 17.0504, -27, -22, 0.300413, -23, -24, 0.300413, -24, -28, 0.300413, -19, -17, 0.300413, -19, -21, 0.300413, 15, -18, 0.300413, 19, -17, 0.300413, -19, -34, 0.300413, -20, -35, 0.550413, -23, -49, 0.300413, -23, -49, 0.300413, -13, -49, 0.300413, 8, -25, 0.300413, 15, -21, 0.300413, 15, -17, 0.300413, -19, -28, 0.300413, -19, -49, 0.300413, -2, -28, 0.300413, -19, -34, 0.300413, -20, -49, 0.300413, -13, -49, 0.300413, -2, -49, 0.300413, 19, -27, 0.300413, 19, -25, 0.300413, 15, -49, 0.300413, 8, 28, 0.300413, -16, 28, 0.300413, -19, 24, 0.300413, -19, 25, 0.300413, -14, -5, 0.300413, -19, -12, 0.300413, -20, -17, 0.300413, -19, 25, 0.300413, -3, 29, 0.300413, -6, 29, 0.300413, -7, 25, 0.300413, -10, -8, 0.300413, -24, -10, 0.300413, -24, -12, 0.300413, -20, -5, 0.300413, -19, 24, 0.300413, -19, 22, 0.300413, -23, 19, 0.300413, -23, 17, 0.300413, -19, 25, 0.300413, -10, 25, 0.300413, -14, 9, 0.300413, -19, 7, 0.300413, -24, 5, 0.300413, -24, 2, 0.300413, -19, -18, 0.300413, 19, -19, 0.800413, 22, -4, 0.300413, 24, -18, 0.300413, 19, -4, 0.300413, 24, 1, 0.300413, 24, 27, 0.300413, 3, -5, 0.300413, -19, -17, 0.300413, -19, 25, 0.300413, -3, 25, 0.300413, -10, 17, 0.300413, -19, 9, 0.300413, -19, 25, 0.300413, -3, 9, 0.300413, -19, 2, 0.300413, -19, 27, 0.300413, 3, 25, 0.300413, -3, 2, 0.300413, -19, -5, 0.300413, -19, 27, 17.5504, -15, 27, 18.0504, -11, 32, 18.0504, -11, 31, 17.5504, -16, 43, 17.0504, -9, 43, 15.8004, -5, 48, 16.5504, -6, 48, 17.3004, -9, 46, 0.300413, 38, 49, 0.300413, 39, 49, 0.300413, 36, 43, 0.300413, 34, 43, 0.300413, 27, 43, 0.300413, 21, 42, 0.300413, 13, 44, 0.300413, 10, 49, 0.300413, 10, 49, 0.300413, 7, 44, 0.300413, 7, 1, 0.300413, 24, 3, 0.300413, 30, 10, 0.300413, 49, 44, 0.300413, 10, 44, 0.300413, 7, 42, 0.300413, 5, 32, 0.300413, 3, 27, 0.300413, 3, 42, 0.300413, 13, 43, 0.300413, 41, 46, 0.300413, 38, 43, 0.300413, 34, 22, 0.300413, 49, 33, 0.300413, 49, 49, 0.300413, 25, 49, 0.300413, 22, 43, 0.300413, 21, 43, 0.300413, 27, 3, 0.300413, 30, -1, 0.300413, 32, -1, 0.300413, 49, 10, 0.300413, 49, 1, 0.300413, 24, 10, 0.300413, 49, 22, 0.300413, 49, 43, 0.300413, 34, 42, 0.300413, 13, 27, 0.300413, 3, 42, 0.300413, 5, 42, 0.300413, -1, 34, 0.300413, -1, 32, 0.300413, 3, 33, 0.300413, 49, 45, 0.300413, 49, 43, 0.300413, 47, 43, 0.300413, 34, 43, 0.300413, 27, 42, 0.300413, 13, 33, 0.300413, 49, 43, 0.300413, 47, 43, 0.300413, 41, 28, 12.5504, 5, 32, 12.5504, 5, 31, 14.0504, 0, 27, 13.8004, 1, 43, 17.0504, 6, 43, 15.8004, 10, 48, 16.0504, 10, 48, 17.3004, 6, -25, 15.0504, 14, -25, 16.0504, 18, -20, 15.8004, 18, -20, 15.0504, 14, -49, 0.300413, 41, -49, 0.300413, 49, -38, 0.300413, 49, -49, 0.300413, 34, -49, 0.300413, 41, -38, 0.300413, 49, -27, 0.300413, 19, -49, 0.300413, 19, -49, 0.300413, 26, -26, 0.300413, 23, -27, 0.300413, 19, -49, 0.300413, 26, -49, 0.300413, 34, -38, 0.300413, 49, -27, 0.300413, 49, 43, 17.0504, 21, 44, 15.8004, 25, 48, 16.0504, 25, 48, 17.3004, 20, -6, 0.300413, 30, -4, 0.300413, 24, -19, 0.800413, 22, -20, 0.300413, 24, -6, 0.300413, 30, -20, 0.300413, 24, -26, 0.300413, 23, -27, 0.300413, 49, -21, 0.300413, 49, -8, 0.300413, 49, -1, 0.300413, 49, -1, 0.300413, 32, -8, 0.300413, 49, -1, 0.300413, 32, -6, 0.300413, 30, -14, 0.300413, 49, -21, 0.300413, 49, -14, 0.300413, 49, -6, 0.300413, 30, -4, 10.5504, 26, -4, 10.5504, 30, 1, 10.5504, 30, 1, 10.5504, 26, 43, 17.3004, 35, 44, 16.0504, 39, 48, 16.3004, 39, 48, 17.5504, 34, 46, 0.300413, 45, 49, 0.300413, 45, 48, 0.550413, 42, 46, 0.800413, 42 )
+polygons = [ PoolIntArray( 0, 5, 1 ), PoolIntArray( 1, 5, 2 ), PoolIntArray( 2, 5, 3 ), PoolIntArray( 3, 5, 4 ), PoolIntArray( 7, 6, 8 ), PoolIntArray( 8, 6, 10 ), PoolIntArray( 8, 10, 9 ), PoolIntArray( 12, 11, 13 ), PoolIntArray( 13, 11, 16 ), PoolIntArray( 13, 16, 15 ), PoolIntArray( 13, 15, 14 ), PoolIntArray( 18, 17, 19 ), PoolIntArray( 19, 17, 20 ), PoolIntArray( 22, 21, 23 ), PoolIntArray( 23, 21, 24 ), PoolIntArray( 26, 25, 27 ), PoolIntArray( 27, 25, 28 ), PoolIntArray( 28, 25, 30 ), PoolIntArray( 28, 30, 29 ), PoolIntArray( 32, 31, 33 ), PoolIntArray( 33, 31, 34 ), PoolIntArray( 34, 31, 35 ), PoolIntArray( 39, 38, 36 ), PoolIntArray( 36, 38, 37 ), PoolIntArray( 42, 41, 40 ), PoolIntArray( 45, 44, 46 ), PoolIntArray( 46, 44, 43 ), PoolIntArray( 50, 49, 47 ), PoolIntArray( 47, 49, 48 ), PoolIntArray( 53, 52, 51 ), PoolIntArray( 55, 54, 56 ), PoolIntArray( 56, 54, 57 ), PoolIntArray( 59, 58, 60 ), PoolIntArray( 60, 58, 61 ), PoolIntArray( 61, 58, 62 ), PoolIntArray( 62, 58, 63 ), PoolIntArray( 66, 65, 67 ), PoolIntArray( 67, 65, 64 ), PoolIntArray( 71, 70, 68 ), PoolIntArray( 68, 70, 69 ), PoolIntArray( 73, 72, 74 ), PoolIntArray( 76, 75, 77 ), PoolIntArray( 77, 75, 78 ), PoolIntArray( 81, 80, 79 ), PoolIntArray( 83, 82, 84 ), PoolIntArray( 84, 82, 85 ), PoolIntArray( 85, 82, 86 ), PoolIntArray( 86, 82, 87 ), PoolIntArray( 92, 93, 88 ), PoolIntArray( 88, 93, 91 ), PoolIntArray( 88, 91, 89 ), PoolIntArray( 89, 91, 90 ), PoolIntArray( 96, 95, 94 ), PoolIntArray( 99, 98, 97 ), PoolIntArray( 100, 103, 101 ), PoolIntArray( 101, 103, 102 ), PoolIntArray( 105, 104, 106 ), PoolIntArray( 106, 104, 107 ), PoolIntArray( 110, 109, 111 ), PoolIntArray( 111, 109, 108 ), PoolIntArray( 115, 114, 112 ), PoolIntArray( 112, 114, 113 ), PoolIntArray( 117, 116, 118 ), PoolIntArray( 118, 116, 119 ), PoolIntArray( 122, 121, 120 ), PoolIntArray( 124, 123, 125 ), PoolIntArray( 125, 123, 126 ), PoolIntArray( 128, 127, 129 ), PoolIntArray( 129, 127, 132 ), PoolIntArray( 129, 132, 131 ), PoolIntArray( 129, 131, 130 ), PoolIntArray( 134, 133, 135 ), PoolIntArray( 135, 133, 136 ), PoolIntArray( 138, 137, 139 ), PoolIntArray( 139, 137, 140 ), PoolIntArray( 142, 141, 143 ), PoolIntArray( 143, 141, 144 ), PoolIntArray( 147, 146, 145 ), PoolIntArray( 149, 148, 150 ), PoolIntArray( 150, 148, 151 ), PoolIntArray( 153, 152, 154 ), PoolIntArray( 154, 152, 155 ), PoolIntArray( 157, 156, 158 ), PoolIntArray( 158, 156, 159 ), PoolIntArray( 159, 156, 161 ), PoolIntArray( 159, 161, 160 ), PoolIntArray( 163, 162, 164 ), PoolIntArray( 164, 162, 165 ), PoolIntArray( 168, 167, 166 ), PoolIntArray( 170, 169, 171 ), PoolIntArray( 171, 169, 172 ), PoolIntArray( 172, 169, 173 ), PoolIntArray( 173, 169, 174 ), PoolIntArray( 176, 175, 177 ), PoolIntArray( 177, 175, 178 ), PoolIntArray( 179, 181, 180 ), PoolIntArray( 183, 182, 184 ), PoolIntArray( 184, 182, 185 ), PoolIntArray( 186, 189, 187 ), PoolIntArray( 187, 189, 188 ), PoolIntArray( 193, 192, 190 ), PoolIntArray( 190, 192, 191 ), PoolIntArray( 195, 194, 196 ), PoolIntArray( 196, 194, 197 ), PoolIntArray( 198, 200, 199 ), PoolIntArray( 204, 203, 201 ), PoolIntArray( 201, 203, 202 ), PoolIntArray( 207, 206, 205 ), PoolIntArray( 209, 208, 210 ), PoolIntArray( 210, 208, 213 ), PoolIntArray( 210, 213, 211 ), PoolIntArray( 211, 213, 212 ), PoolIntArray( 215, 214, 216 ), PoolIntArray( 216, 214, 218 ), PoolIntArray( 216, 218, 217 ), PoolIntArray( 220, 219, 221 ), PoolIntArray( 221, 219, 222 ), PoolIntArray( 224, 223, 225 ), PoolIntArray( 225, 223, 226 ), PoolIntArray( 228, 227, 229 ), PoolIntArray( 229, 227, 230 ), PoolIntArray( 230, 227, 231 ), PoolIntArray( 231, 227, 232 ), PoolIntArray( 235, 234, 236 ), PoolIntArray( 236, 234, 233 ), PoolIntArray( 239, 238, 237 ), PoolIntArray( 242, 241, 240 ), PoolIntArray( 245, 244, 243 ), PoolIntArray( 249, 248, 246 ), PoolIntArray( 246, 248, 247 ), PoolIntArray( 253, 252, 250 ), PoolIntArray( 250, 252, 251 ), PoolIntArray( 257, 256, 254 ), PoolIntArray( 254, 256, 255 ), PoolIntArray( 260, 259, 258 ), PoolIntArray( 263, 262, 261 ), PoolIntArray( 266, 265, 264 ), PoolIntArray( 268, 267, 269 ), PoolIntArray( 269, 267, 270 ), PoolIntArray( 270, 267, 271 ), PoolIntArray( 271, 267, 272 ), PoolIntArray( 274, 273, 275 ), PoolIntArray( 275, 273, 276 ), PoolIntArray( 280, 279, 277 ), PoolIntArray( 277, 279, 278 ), PoolIntArray( 282, 281, 283 ), PoolIntArray( 283, 281, 285 ), PoolIntArray( 283, 285, 284 ), PoolIntArray( 288, 287, 286 ), PoolIntArray( 290, 289, 291 ), PoolIntArray( 291, 289, 292 ), PoolIntArray( 295, 294, 293 ), PoolIntArray( 299, 298, 296 ), PoolIntArray( 296, 298, 297 ), PoolIntArray( 301, 300, 302 ), PoolIntArray( 302, 300, 303 ), PoolIntArray( 307, 306, 304 ), PoolIntArray( 304, 306, 305 ) ]
+cell/size = 1.0
+cell/height = 0.25
+agent/height = 1.5
+agent/radius = 0.5
+region/min_size = 3.0
+
+[sub_resource type="Environment" id=6]
+ambient_light_color = Color( 1, 0.901961, 0.901961, 1 )
+fog_enabled = true
+fog_color = Color( 0, 0, 0, 1 )
+fog_sun_color = Color( 1, 0.415686, 0.415686, 1 )
+fog_depth_begin = 5.0
+fog_depth_end = 50.0
+fog_depth_curve = 0.2
+fog_transmit_enabled = true
+fog_transmit_curve = 0.3
+
+[sub_resource type="ViewportTexture" id=3]
+viewport_path = NodePath("ViewportContainer/Viewport")
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 7 )
+shader_param/col_depth = 32.0
+shader_param/dith_range = 1.0
+shader_param/scene_col = SubResource( 3 )
+shader_param/dither_tex = ExtResource( 4 )
+
+[sub_resource type="CanvasItemMaterial" id=5]
+blend_mode = 1
+light_mode = 1
+
+[node name="Control" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 480, 270 )
+transparent_bg = true
+handle_input_locally = false
+render_target_clear_mode = 1
+render_target_update_mode = 3
+audio_listener_enable_3d = true
+shadow_atlas_size = 2048
+
+[node name="Root" type="Spatial" parent="ViewportContainer/Viewport"]
+
+[node name="DefPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 14 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.84456, 1.13328, 3.25152 )
+
+[node name="RiflePickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 6 )]
+
+[node name="ShotgunPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 10 )]
+
+[node name="LauncherPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 9 )]
+
+[node name="Navigation" type="Navigation" parent="ViewportContainer/Viewport/Root"]
+
+[node name="Enemies" type="Node" parent="ViewportContainer/Viewport/Root/Navigation"]
+
+[node name="Player" parent="ViewportContainer/Viewport/Root/Navigation" instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4, 2, 1 )
+collision_mask = 2147483649
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="ViewportContainer/Viewport/Root/Navigation"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.03161, 0 )
+navmesh = SubResource( 1 )
+
+[node name="Spatial" parent="ViewportContainer/Viewport/Root/Navigation/NavigationMeshInstance" instance=ExtResource( 2 )]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="ViewportContainer/Viewport/Root"]
+environment = SubResource( 6 )
+
+[node name="ClearColor" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1880.0
+margin_bottom = 1040.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Render" type="ColorRect" parent="."]
+light_mask = 2
+material = SubResource( 4 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1880.0
+margin_bottom = 1040.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Crosshair" type="TextureRect" parent="Render"]
+light_mask = 0
+material = SubResource( 5 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -2.0
+margin_top = -2.0
+margin_right = 2.0
+margin_bottom = 2.0
+rect_scale = Vector2( 2, 2 )
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+pause_mode = 2
+layer = 0
+follow_viewport_enable = true
+
+[node name="PauseScreen" parent="CanvasLayer" instance=ExtResource( 11 )]
+visible = false
