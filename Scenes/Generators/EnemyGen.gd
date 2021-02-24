@@ -8,4 +8,5 @@ func _on_Timer_timeout():
 	var enemyInstance = enemies[rand_range(0, 3)].instance()
 	$"../".add_child(enemyInstance)
 	
-	enemyInstance.global_transform.origin = Vector3(rand_range(-distance, distance), 1, rand_range(-distance, distance))
+	enemyInstance.global_transform.origin.x = global_transform.origin.x + rand_range(-distance, distance)
+	enemyInstance.global_transform.origin.z = global_transform.origin.z + rand_range(-distance, distance)

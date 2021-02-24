@@ -17,8 +17,8 @@ export var damage = 5
 var target
 
 export var speed = 10
-export var sightRange : int
-export var minDistance : int 
+export var sightRange : int = 20
+export var minDistance : int = 5
 var velocity
 
 export var move = true
@@ -36,6 +36,7 @@ onready var navigation = get_parent().get_parent()
 onready var player = get_parent().get_parent().get_node("Player")
 
 onready var bloodKicked = preload("res://Scenes/BloodSplatterKick.tscn")
+onready var ammo = preload("res://Scenes/AmmoPickup.tscn")
 
 var path = []
 var pathNode = 0
@@ -67,6 +68,17 @@ func _process(_delta):
 			anim.play("deathShit")
 			audio.play()
 			if anim.current_animation_position > 0.6:
+				var ammoInstance = ammo.instance()
+				$"../".add_child(ammoInstance)
+				
+				var chance = rand_range(0, 100)
+				if chance <= 50: ammoInstance.weapon = 0
+				else: ammoInstance.weapon = 1
+				
+				ammoInstance.global_transform.origin.x = global_transform.origin.x + rand_range(-2, 2)
+				ammoInstance.global_transform.origin.y = global_transform.origin.y
+				ammoInstance.global_transform.origin.z = global_transform.origin.z + rand_range(-2, 2)
+				
 				queue_free()
 		IDLE:
 			if not anim.current_animation == "idleRifle":
@@ -109,6 +121,7 @@ func _on_SightRange_body_entered(body):
 			target = body
 			shootTimer.start()
 			navigationTimer.start()
+			print("PLAYER FOUND")
 
 
 func _on_SightRange_body_exited(body):
