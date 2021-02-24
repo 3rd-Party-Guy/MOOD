@@ -27,7 +27,6 @@ config/icon="res://DETESTATION.png"
 
 [autoload]
 
-Music="*res://Scenes/Autoloads/Music.tscn"
 tweaker="*res://Scripts/settingsDebug.gd"
 
 [debug]

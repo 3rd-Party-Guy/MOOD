@@ -80,7 +80,7 @@ signal showDef
 signal showRifle
 signal showShotgun
 signal showLauncher
-signal showNone
+#signal showNone
 
 var STATE = DEAD
 

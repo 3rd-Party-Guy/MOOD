@@ -1,9 +1,19 @@
 extends Control
 
 onready var buttonResume = $MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/Resume
+onready var audio = $AudioStreamPlayer
 
+var battleMusic = load("res://Sounds/Music/Battle Theme - alt Mix.wav")
+
+
+#func play_music():
+#	audio.stream = battleMusic
+#	audio.play()
+#	audio.volume_db = tweaker.musicVolume
+	
 func _ready():
 	buttonResume.grab_focus()
+	#play_music()
 
 func _physics_process(_delta):
 	if buttonResume.is_hovered():
@@ -41,7 +51,8 @@ func _on_speedSlider_value_changed(value):
 
 func _on_musicSlider_value_changed(value):
 	tweaker.musicVolume = value
-
+	audio.volume_db = value
+	#audio.set_bus_volume_db(audio.get_bus_index("Music"), linear2db(value))
 
 func _on_shotgunRange_value_changed(value):
 	tweaker.sgunRange = value

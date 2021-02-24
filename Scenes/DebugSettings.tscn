@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
+[ext_resource path="res://Sounds/Music/Battle Theme - alt Mix.wav" type="AudioStream" id=1]
 [ext_resource path="res://Scenes/DebugSettings.gd" type="Script" id=3]
 
 [node name="PauseScreen" type="Control"]
@@ -31,9 +32,9 @@ margin_right = 1920.0
 margin_bottom = 1080.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer"]
-margin_left = 913.0
+margin_left = 866.0
 margin_top = 492.0
-margin_right = 1006.0
+margin_right = 1054.0
 margin_bottom = 588.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer"]
@@ -73,10 +74,9 @@ min_value = 1.0
 value = 20.0
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer"]
-visible = false
-margin_left = 86.0
-margin_right = 177.0
-margin_bottom = 58.0
+margin_left = 97.0
+margin_right = 188.0
+margin_bottom = 96.0
 
 [node name="Label2" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer2"]
 margin_right = 91.0
@@ -87,7 +87,15 @@ text = "Music Volume"
 margin_top = 18.0
 margin_right = 91.0
 margin_bottom = 34.0
-max_value = 20.0
+min_value = -80.0
+max_value = 15.0
+value = 5.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+volume_db = 5.0
+autoplay = true
+bus = "Music"
 [connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/Resume" to="." method="_on_Resume_pressed"]
 [connection signal="value_changed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/speedSlider" to="." method="_on_speedSlider_value_changed"]
 [connection signal="value_changed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/shotgunRange" to="." method="_on_shotgunRange_value_changed"]
