@@ -9,3 +9,6 @@ func _ready():
 func play_music():
 	audio.stream = battleMusic
 	audio.play()
+	
+	# temporary music mute whilst testing 
+	#audio.volume_db = -80

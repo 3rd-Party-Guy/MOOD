@@ -22,7 +22,8 @@ const CAM_UNSHAKE_SPEED = 0.4
 var maxHealth = 100
 var health = maxHealth
 
-var speed = 25
+#onready var settingsDebug = get_node("res://Scripts/settingsDebug")
+#var speed = settingsDebug.playerSpeed
 var dashSpeed = 2
 var dashes = 3
 var dashMax = 3
@@ -48,7 +49,12 @@ onready var deathAudio = $DeathAudio
 onready var defCamTranslation = camera.translation
 
 onready var rifleRay = $Head/Camera/RayCastRifle
-onready var shotgunRay = [$Head/Camera/ShotgunRayCast/ShotgunRay1, $Head/Camera/ShotgunRayCast/ShotgunRay2, $Head/Camera/ShotgunRayCast/ShotgunRay3]
+onready var shotgunRay = [$Head/Camera/ShotgunRayCast/ShotgunRay1, $Head/Camera/ShotgunRayCast/ShotgunRay2, $Head/Camera/ShotgunRayCast/ShotgunRay3,
+$Head/Camera/ShotgunRayCast/ShotgunRay4, $Head/Camera/ShotgunRayCast/ShotgunRay5, $Head/Camera/ShotgunRayCast/ShotgunRay6,
+$Head/Camera/ShotgunRayCast/ShotgunRay7, $Head/Camera/ShotgunRayCast/ShotgunRay8, $Head/Camera/ShotgunRayCast/ShotgunRay9,
+$Head/Camera/ShotgunRayCast/ShotgunRay10, $Head/Camera/ShotgunRayCast/ShotgunRay11, $Head/Camera/ShotgunRayCast/ShotgunRay12,
+$Head/Camera/ShotgunRayCast/ShotgunRay13, $Head/Camera/ShotgunRayCast/ShotgunRay14, $Head/Camera/ShotgunRayCast/ShotgunRay15]
+
 onready var launcherRay = $Head/Camera/RayCastLauncher
 onready var kickRay = $Head/Camera/RayCastKick
 
@@ -121,7 +127,7 @@ func _process(delta):
 			
 		direction = direction.normalized() # Maybe leave this out for retro effect?
 		
-		velocity = velocity.linear_interpolate(direction * speed, acceleration * delta)
+		velocity = velocity.linear_interpolate(direction * tweaker.playerSpeed, acceleration * delta)
 		
 	if Input.is_action_just_pressed("dash") and dashes > 0:
 		dashes -= 1
@@ -198,6 +204,7 @@ func ChangeWeapon(weapon):
 			rifleRay.enabled = false
 			for raycast in shotgunRay:
 				raycast.enabled = true
+				raycast.cast_to = Vector3(0,0,-tweaker.sgunRange)
 			launcherRay.enabled = false
 			
 			weaponLabel.text = "Shotgun"

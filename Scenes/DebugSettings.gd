@@ -1,8 +1,6 @@
 extends Control
 
-onready var buttonResume = $MarginContainer/CenterContainer/VBoxContainer/Resume
-onready var buttonRestart = $MarginContainer/CenterContainer/VBoxContainer/Restart
-onready var buttonQuit = $MarginContainer/CenterContainer/VBoxContainer/Quit
+onready var buttonResume = $MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/Resume
 
 func _ready():
 	buttonResume.grab_focus()
@@ -10,13 +8,9 @@ func _ready():
 func _physics_process(_delta):
 	if buttonResume.is_hovered():
 		buttonResume.grab_focus()
-	if buttonRestart.is_hovered():
-		buttonRestart.grab_focus()
-	if buttonQuit.is_hovered():
-		buttonQuit.grab_focus()
 		
 func _input(event):
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("help"):
 		get_tree().paused = not get_tree().paused
 		visible = not visible
 		
@@ -26,13 +20,12 @@ func _input(event):
 			Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		
-
 
 func _on_Resume_pressed():
 	get_tree().paused = false
 	visible = false
 	visible = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _on_Restart_pressed():
 	get_tree().paused = false
@@ -42,3 +35,13 @@ func _on_Restart_pressed():
 func _on_Quit_pressed():
 	get_tree().quit()
 
+
+func _on_speedSlider_value_changed(value):
+	tweaker.playerSpeed = value
+
+func _on_musicSlider_value_changed(value):
+	tweaker.musicVolume = value
+
+
+func _on_shotgunRange_value_changed(value):
+	tweaker.sgunRange = value

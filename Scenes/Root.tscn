@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/EnemyMelee.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Scenes/AmmoPickup.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/EnemyProjectile.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/DefPickup.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/DebugSettings.tscn" type="PackedScene" id=15]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody
@@ -336,6 +337,7 @@ transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.84456, 1.13328, 3.2515
 [node name="RiflePickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 6 )]
 
 [node name="ShotgunPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 10 )]
+transform = Transform( 0.499983, -0.00415283, 0.000461486, 0.00415581, 0.499972, -0.00333829, -0.000433754, 0.00334201, 0.499989, 8.47068, 0.176915, 45.855 )
 
 [node name="LauncherPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 9 )]
 
@@ -630,6 +632,9 @@ __meta__ = {
 pause_mode = 2
 layer = 0
 follow_viewport_enable = true
+
+[node name="PauseScreen2" parent="CanvasLayer" instance=ExtResource( 15 )]
+visible = false
 
 [node name="PauseScreen" parent="CanvasLayer" instance=ExtResource( 11 )]
 visible = false
