@@ -450,7 +450,6 @@ move = false
 [node name="Enemy18" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5188, -60, 42.1449 )
 sightRange = 15
-minDistance = 5
 
 [node name="Enemy19" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 31.5188, -60, 42.1449 )
@@ -467,12 +466,10 @@ minDistance = 5
 [node name="EnemyMelee" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1175, -63.0468, 40.4101 )
 sightRange = 15
-minDistance = 1.0
 
 [node name="EnemyMelee2" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1175, -63.0468, 39.4101 )
 sightRange = 15
-minDistance = 1.0
 
 [node name="Enemy21" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.3807, -63.0539, 39.9737 )
@@ -498,7 +495,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.3807, -63.0539, 37.9737 )
 [node name="EnemyMelee3" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1175, -63.0468, 38.4101 )
 sightRange = 15
-minDistance = 1.0
 
 [node name="Enemy27" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.6339, -61.8021, 37.7742 )
@@ -573,19 +569,15 @@ sightRange = 10
 
 [node name="EnemyMelee11" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21.9074, -63.2153, 47.3206 )
-sightRange = 20
 
 [node name="EnemyRifle3" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.8501, -63.2157, 48.4895 )
-sightRange = 20
 
 [node name="EnemyMelee12" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9074, -63.2153, 49.3206 )
-sightRange = 20
 
 [node name="EnemyRifle4" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8501, -63.2157, 50.4895 )
-sightRange = 20
 
 [node name="Player" parent="ViewportContainer/Viewport/Root/Navigation" instance=ExtResource( 1 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4, 2, 1 )
