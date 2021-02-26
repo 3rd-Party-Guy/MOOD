@@ -17,8 +17,8 @@ export var damage = 5
 var target
 var velocity
 
-export var sightRange : int
-export var minDistance : float
+export var sightRange : int = 20
+export var minDistance : float = 1
 
 export var speed = 10
 
@@ -31,6 +31,7 @@ onready var audioAlert = $AudioAlert
 onready var anim = $ratManV2/AnimationPlayer
 
 onready var bloodKicked = preload("res://Scenes/BloodSplatterKick.tscn")
+onready var ammo = preload("res://Scenes/AmmoPickup.tscn")
 
 onready var navigation = get_parent().get_parent()
 
@@ -120,6 +121,16 @@ func _on_NavigationTimer_timeout():
 
 
 func _on_Audio_finished():
+	var ammoInstance = ammo.instance()
+	$"../".add_child(ammoInstance)
+	
+	var chance = rand_range(0, 100)
+	if chance <= 50: ammoInstance.weapon = 0
+	else: ammoInstance.weapon = 1
+	
+	ammoInstance.global_transform.origin.x = global_transform.origin.x + rand_range(-2, 2)
+	ammoInstance.global_transform.origin.y = global_transform.origin.y
+	ammoInstance.global_transform.origin.z = global_transform.origin.z + rand_range(-2, 2)
 	queue_free()
 
 func _on_HitTimer_timeout():
