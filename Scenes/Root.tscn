@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/EnemyMelee.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Scenes/AmmoPickup.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/EnemyProjectile.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/DefPickup.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/DebugSettings.tscn" type="PackedScene" id=15]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody
@@ -34,8 +35,8 @@ export var health = 30
 export var damage = 5
 var target
 
-export var sightRange = 40
-export var minDistance = 4
+export var sightRange :int
+export var minDistance : int
 
 export var speed = 10
 var velocity
@@ -45,7 +46,8 @@ onready var eyes =  $Eyes
 onready var shootTimer = $ShootTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
-onready var anim = $fatRatManV15/AnimationPlayer
+onready var audioAlert = $AudioAlert
+onready var anim = $fatRatManV19/AnimationPlayer
 
 onready var projectile = preload(\"res://Scenes/EnemyProjectileBullet.tscn\")
 onready var bloodKicked = preload(\"res://Scenes/BloodSplatterKick.tscn\")
@@ -75,23 +77,30 @@ func _physics_process(_delta):
 				move_and_slide(direction.normalized() * speed, Vector3.UP)
 
 func _process(_delta):
+		
 	if health <= 0 and not audio.playing:
-		print(\"Enemy has died!\")
-		audio.play()
+		#print(\"Enemy has died!\")
+		#audio.play()
 		state = DEAD
 	
 	match state:
+		DEAD:
+			print(\"Enemy has died!\")
+			anim.play(\"death\")
+			audio.play()
+			if anim.current_animation_position > 1.2:
+				queue_free()
 		IDLE:
-			if not anim.current_animation == \"idleLauncher\":
-				anim.play(\"idleLauncher\")
+			if not anim.current_animation == \"idle\":
+				anim.play(\"idle\")
 			pass
 		
 		ALERT:
 			# look at player
 			eyes.look_at(target.global_transform.origin, Vector3.UP)
 			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
-			if not anim.current_animation == \"walkLauncher\":
-					anim.play(\"walkLauncher\")
+			if not anim.current_animation == \"patrol\":
+					anim.play(\"patrol\")
 			pass
 		KICKED:
 			var collide = move_and_collide(velocity * 10000)
@@ -103,8 +112,8 @@ func _process(_delta):
 				
 			pass
 		BERSERK:
-			if not anim.current_animation == \"fireLauncher\":
-				anim.play(\"fireLauncher\")
+			if not anim.current_animation == \"fire\":
+				anim.play(\"fire\")
 			pass
 		
 
@@ -114,23 +123,27 @@ func move_to(target_pos):
 
 func _on_SightRange_body_entered(body):
 	if body.is_in_group(\"Player\") and not state == KICKED:
-		state = ALERT
-		target = body
-		shootTimer.start()
-		navigationTimer.start()
+		if state != DEAD:
+			state = ALERT
+			audioAlert.play()
+			target = body
+			shootTimer.start()
+			navigationTimer.start()
 
 
 func _on_SightRange_body_exited(body):
 	if body.is_in_group(\"Player\") and not state == KICKED:
-		state = IDLE
+		if state != DEAD:
+			state = IDLE
 
 
 func _on_ShootTimer_timeout():
 	if raycast.is_colliding():
-		state = ALERT
-		var p = projectile.instance()
-		add_child(p)
-		p.shoot = true
+		if state != DEAD:
+			state = ALERT
+			var p = projectile.instance()
+			add_child(p)
+			p.shoot = true
 
 
 func _on_NavigationTimer_timeout():
@@ -164,8 +177,8 @@ export var health = 30
 export var damage = 5
 var target
 
-export var sightRange = 40
-export var minDistance = 4
+export var sightRange :int
+export var minDistance : int
 
 export var speed = 10
 var velocity
@@ -175,7 +188,8 @@ onready var eyes =  $Eyes
 onready var shootTimer = $ShootTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
-onready var anim = $fatRatManV15/AnimationPlayer
+onready var audioAlert = $AudioAlert
+onready var anim = $fatRatManV19/AnimationPlayer
 
 onready var projectile = preload(\"res://Scenes/EnemyProjectileBullet.tscn\")
 onready var bloodKicked = preload(\"res://Scenes/BloodSplatterKick.tscn\")
@@ -205,23 +219,30 @@ func _physics_process(_delta):
 				move_and_slide(direction.normalized() * speed, Vector3.UP)
 
 func _process(_delta):
+		
 	if health <= 0 and not audio.playing:
-		print(\"Enemy has died!\")
-		audio.play()
+		#print(\"Enemy has died!\")
+		#audio.play()
 		state = DEAD
 	
 	match state:
+		DEAD:
+			print(\"Enemy has died!\")
+			anim.play(\"death\")
+			audio.play()
+			if anim.current_animation_position > 1.2:
+				queue_free()
 		IDLE:
-			if not anim.current_animation == \"idleLauncher\":
-				anim.play(\"idleLauncher\")
+			if not anim.current_animation == \"idle\":
+				anim.play(\"idle\")
 			pass
 		
 		ALERT:
 			# look at player
 			eyes.look_at(target.global_transform.origin, Vector3.UP)
 			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
-			if not anim.current_animation == \"walkLauncher\":
-					anim.play(\"walkLauncher\")
+			if not anim.current_animation == \"patrol\":
+					anim.play(\"patrol\")
 			pass
 		KICKED:
 			var collide = move_and_collide(velocity * 10000)
@@ -233,8 +254,8 @@ func _process(_delta):
 				
 			pass
 		BERSERK:
-			if not anim.current_animation == \"fireLauncher\":
-				anim.play(\"fireLauncher\")
+			if not anim.current_animation == \"fire\":
+				anim.play(\"fire\")
 			pass
 		
 
@@ -244,23 +265,27 @@ func move_to(target_pos):
 
 func _on_SightRange_body_entered(body):
 	if body.is_in_group(\"Player\") and not state == KICKED:
-		state = ALERT
-		target = body
-		shootTimer.start()
-		navigationTimer.start()
+		if state != DEAD:
+			state = ALERT
+			audioAlert.play()
+			target = body
+			shootTimer.start()
+			navigationTimer.start()
 
 
 func _on_SightRange_body_exited(body):
 	if body.is_in_group(\"Player\") and not state == KICKED:
-		state = IDLE
+		if state != DEAD:
+			state = IDLE
 
 
 func _on_ShootTimer_timeout():
 	if raycast.is_colliding():
-		state = ALERT
-		var p = projectile.instance()
-		add_child(p)
-		p.shoot = true
+		if state != DEAD:
+			state = ALERT
+			var p = projectile.instance()
+			add_child(p)
+			p.shoot = true
 
 
 func _on_NavigationTimer_timeout():
@@ -336,6 +361,7 @@ transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.84456, 1.13328, 3.2515
 [node name="RiflePickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 6 )]
 
 [node name="ShotgunPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 10 )]
+transform = Transform( 0.499983, -0.00415283, 0.000461486, 0.00415581, 0.499972, -0.00333829, -0.000433754, 0.00334201, 0.499989, 8.47068, 0.176915, 45.855 )
 
 [node name="LauncherPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 9 )]
 
@@ -609,18 +635,36 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Crosshair" type="TextureRect" parent="Render"]
+[node name="MarginContainer" type="MarginContainer" parent="Render"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Render/MarginContainer"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Render/MarginContainer/VBoxContainer"]
+margin_top = 538.0
+margin_right = 1920.0
+margin_bottom = 542.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Crosshair" type="TextureRect" parent="Render/MarginContainer/VBoxContainer/HBoxContainer"]
 light_mask = 0
 material = SubResource( 7 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -2.0
-margin_top = -2.0
-margin_right = 2.0
-margin_bottom = 2.0
-rect_scale = Vector2( 2, 2 )
+margin_left = 958.0
+margin_right = 962.0
+margin_bottom = 4.0
 texture = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -630,6 +674,9 @@ __meta__ = {
 pause_mode = 2
 layer = 0
 follow_viewport_enable = true
+
+[node name="PauseScreen2" parent="CanvasLayer" instance=ExtResource( 15 )]
+visible = false
 
 [node name="PauseScreen" parent="CanvasLayer" instance=ExtResource( 11 )]
 visible = false

@@ -254,6 +254,66 @@ transform = Transform( 0.99416, -0.0379609, -0.101014, 0.0399472, 0.999045, 0.01
 cast_to = Vector3( 0, 0, -20 )
 collide_with_areas = true
 
+[node name="ShotgunRay4" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.965926, -0.256886, -0.0315689, 0.258819, 0.958713, 0.117817, -1.86265e-09, -0.121973, 0.992533, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay5" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.966606, -0.251278, 0.0503113, 0.255491, 0.960184, -0.113008, -0.0199116, 0.122089, 0.992319, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay6" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.949946, -0.295239, -0.102157, 0.295894, 0.955178, -0.00903442, 0.100246, -0.0216453, 0.994727, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay7" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.866025, -0.496267, -0.0609865, 0.5, 0.859559, 0.105632, 0, -0.121973, 0.992533, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay8" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.867544, -0.49123, 0.0778456, 0.496961, 0.862431, -0.096136, -0.0199116, 0.122089, 0.992319, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay9" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.840994, -0.532398, -0.0963374, 0.531675, 0.846218, -0.0351667, 0.100246, -0.0216453, 0.994727, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay10" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.707107, -0.701827, -0.0862479, 0.707107, 0.701827, 0.0862479, 0, -0.121973, 0.992533, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay11" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.70936, -0.697705, 0.100075, 0.704565, 0.705905, -0.0727123, -0.0199116, 0.122089, 0.992319, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay12" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.67473, -0.733274, -0.083953, 0.731224, 0.679589, -0.0589024, 0.100246, -0.0216453, 0.994727, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay13" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.5, -0.859559, -0.105632, 0.866025, 0.496266, 0.0609865, 0, -0.121973, 0.992533, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay14" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.502835, -0.856633, 0.115484, 0.864153, 0.501272, -0.0443334, -0.0199116, 0.122089, 0.992319, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay15" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.462485, -0.884179, -0.0658473, 0.880941, 0.466647, -0.0786239, 0.100246, -0.0216453, 0.994727, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
 [node name="UI" type="ViewportContainer" parent="Head/Camera"]
 anchor_right = 1.0
 anchor_bottom = 1.0

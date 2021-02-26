@@ -3,7 +3,6 @@ extends Spatial
 var ammo = 30
 var ammoMax = 90
 
-var maxDamage = 40
 
 var MAX_CAM_SHAKE_X = 1
 var MAX_CAM_SHAKE_Y = 1
@@ -14,7 +13,8 @@ var MAX_POINTS = 4350
 
 onready var animPlayer = $"AnimationPlayer"
 onready var rayRotation = $"../../ShotgunRayCast"
-onready var raycasts = [$"../../ShotgunRayCast/ShotgunRay1", $"../../ShotgunRayCast/ShotgunRay2", $"../../ShotgunRayCast/ShotgunRay3"]
+onready var raycasts = [$"../../ShotgunRayCast/ShotgunRay1", $"../../ShotgunRayCast/ShotgunRay2", $"../../ShotgunRayCast/ShotgunRay3",$"../../ShotgunRayCast/ShotgunRay4",$"../../ShotgunRayCast/ShotgunRay5",$"../../ShotgunRayCast/ShotgunRay6",$"../../ShotgunRayCast/ShotgunRay7",$"../../ShotgunRayCast/ShotgunRay8",$"../../ShotgunRayCast/ShotgunRay9",$"../../ShotgunRayCast/ShotgunRay10",$"../../ShotgunRayCast/ShotgunRay11",$"../../ShotgunRayCast/ShotgunRay12",$"../../ShotgunRayCast/ShotgunRay13",$"../../ShotgunRayCast/ShotgunRay14",$"../../ShotgunRayCast/ShotgunRay15"]
+onready var maxDamage = 120 / raycasts.size()
 onready var camera = get_parent()
 onready var player = $"../../../../"
 onready var audio = $Audio
@@ -51,7 +51,7 @@ func fire():
 			
 		audio.play()
 			
-		for raycast in raycasts:	
+		for raycast in raycasts:
 			if raycast.is_colliding():
 				var target = raycast.get_collider()
 				var d = bulletDecal.instance()

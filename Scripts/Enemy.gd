@@ -29,7 +29,7 @@ onready var shootTimer = $ShootTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
 onready var audioAlert = $AudioAlert
-onready var anim = $rifleRatManV17/AnimationPlayer
+onready var anim = $rifleRatManV18/AnimationPlayer
 
 onready var navigation = get_parent().get_parent()
 
@@ -64,13 +64,13 @@ func _process(_delta):
 	match state:
 		DEAD:
 			print("Enemy has died!")
-			anim.play("deathShit")
+			anim.play("death")
 			audio.play()
 			if anim.current_animation_position > 0.6:
 				queue_free()
 		IDLE:
-			if not anim.current_animation == "idleRifle":
-				anim.play("idleRifle")
+			if not anim.current_animation == "idle":
+				anim.play("idle")
 			pass
 		
 		ALERT:

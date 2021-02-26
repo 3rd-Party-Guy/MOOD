@@ -37,7 +37,7 @@ tracks/0/keys = {
 }
 
 [node name="Shotgun" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1.3411e-06 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -1.8, -1 )
 visible = false
 script = ExtResource( 1 )
 

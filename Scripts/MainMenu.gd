@@ -4,8 +4,8 @@ var scene = "res://Scenes/Root.tscn"
 var testScene = "res://Scenes/TestScene.tscn"
 
 func _ready():
-	$RichTextLabel/AnimationPlayer.play("Start")
-
+	$MarginContainer/VBoxContainer/RichTextLabel/AnimationPlayer.play("Start")
+	
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		print("PLAYER STARTED GAME")

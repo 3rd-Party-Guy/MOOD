@@ -28,7 +28,7 @@ onready var shootTimer = $ShootTimer
 onready var navigationTimer = $NavigationTimer
 onready var audio = $Audio
 onready var audioAlert = $AudioAlert
-onready var anim = $fatRatManV15/AnimationPlayer
+onready var anim = $fatRatManV19/AnimationPlayer
 
 onready var projectile = preload("res://Scenes/EnemyProjectileBullet.tscn")
 onready var bloodKicked = preload("res://Scenes/BloodSplatterKick.tscn")
@@ -58,23 +58,30 @@ func _physics_process(_delta):
 				move_and_slide(direction.normalized() * speed, Vector3.UP)
 
 func _process(_delta):
+		
 	if health <= 0 and not audio.playing:
-		print("Enemy has died!")
-		audio.play()
+		#print("Enemy has died!")
+		#audio.play()
 		state = DEAD
 	
 	match state:
+		DEAD:
+			print("Enemy has died!")
+			anim.play("death")
+			audio.play()
+			if anim.current_animation_position > 1.2:
+				queue_free()
 		IDLE:
-			if not anim.current_animation == "idleLauncher":
-				anim.play("idleLauncher")
+			if not anim.current_animation == "idle":
+				anim.play("idle")
 			pass
 		
 		ALERT:
 			# look at player
 			eyes.look_at(target.global_transform.origin, Vector3.UP)
 			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
-			if not anim.current_animation == "walkLauncher":
-					anim.play("walkLauncher")
+			if not anim.current_animation == "patrol":
+					anim.play("patrol")
 			pass
 		KICKED:
 			var collide = move_and_collide(velocity * 10000)
@@ -86,8 +93,8 @@ func _process(_delta):
 				
 			pass
 		BERSERK:
-			if not anim.current_animation == "fireLauncher":
-				anim.play("fireLauncher")
+			if not anim.current_animation == "fire":
+				anim.play("fire")
 			pass
 		
 
@@ -97,24 +104,27 @@ func move_to(target_pos):
 
 func _on_SightRange_body_entered(body):
 	if body.is_in_group("Player") and not state == KICKED:
-		state = ALERT
-		audioAlert.play()
-		target = body
-		shootTimer.start()
-		navigationTimer.start()
+		if state != DEAD:
+			state = ALERT
+			audioAlert.play()
+			target = body
+			shootTimer.start()
+			navigationTimer.start()
 
 
 func _on_SightRange_body_exited(body):
 	if body.is_in_group("Player") and not state == KICKED:
-		state = IDLE
+		if state != DEAD:
+			state = IDLE
 
 
 func _on_ShootTimer_timeout():
 	if raycast.is_colliding():
-		state = ALERT
-		var p = projectile.instance()
-		add_child(p)
-		p.shoot = true
+		if state != DEAD:
+			state = ALERT
+			var p = projectile.instance()
+			add_child(p)
+			p.shoot = true
 
 
 func _on_NavigationTimer_timeout():
