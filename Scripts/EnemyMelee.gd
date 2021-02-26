@@ -58,11 +58,17 @@ func _physics_process(_delta):
 
 func _process(_delta):
 	if health <= 0 and not audio.playing:
-		print("Enemy has died!")
-		audio.play()
+		#print("Enemy has died!")
+		#audio.play()
 		state = DEAD
 	
 	match state:
+		DEAD:
+			print("Enemy has died!")
+			anim.play("death")
+			audio.play()
+			if anim.current_animation_position > 1.0:
+				queue_free()
 		IDLE:
 			if not anim.current_animation == "idleBat":
 				anim.play("idleBat")
@@ -96,37 +102,43 @@ func move_to(target_pos):
 
 func _on_SightRange_body_entered(body):
 	if body.is_in_group("Player") and state != KICKED and state != BERSERK:
-		state = ALERT
-		audioAlert.play()
-		target = body
-		navigationTimer.start()
+		if state != DEAD:
+			state = ALERT
+			audioAlert.play()
+			target = body
+			navigationTimer.start()
 
 
 func _on_SightRange_body_exited(body):
 	if body.is_in_group("Player") and state != KICKED:
-		state = IDLE
+		if state != DEAD:
+			state = IDLE
 
 func _on_NavigationTimer_timeout():
-	move_to(player.global_transform.origin)
+	if state != DEAD:
+		move_to(player.global_transform.origin)
 
 
 func _on_Audio_finished():
 	queue_free()
 
 func _on_HitTimer_timeout():
-	player.onDamage(damage)
+	if state != DEAD:
+		player.onDamage(damage)
 
 
 func _on_HitRange_body_entered(body):
 	if body.is_in_group("Player"):
-		state = BERSERK
-		hitTimer.start()
+		if state != DEAD:
+			state = BERSERK
+			hitTimer.start()
 
 
 func _on_HitRange_body_exited(body):
 	if body.is_in_group("Player"):
-		state = ALERT
-		hitTimer.stop()
+		if state != DEAD:
+			state = ALERT
+			hitTimer.stop()
 
 func onKicked(pos):
 	velocity = -pos
