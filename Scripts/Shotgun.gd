@@ -38,6 +38,7 @@ func _ready():
 	player.connect("showLauncher", self, "hide")
 # warning-ignore:return_value_discarded
 	player.connect("showNone", self, "hide")
+	player.connect("showMegaPistol", self, "hide")
 
 func fire():
 	if not animPlayer.is_playing() and not ammo < 3:
@@ -55,12 +56,6 @@ func fire():
 			if raycast.is_colliding():
 				var target = raycast.get_collider()
 				var d = bulletDecal.instance()
-					
-				target.add_child(d)
-				d.global_transform.origin = raycast.get_collision_point()
-				d.look_at(raycast.get_collision_point() + raycast.get_collision_normal(), Vector3.UP)
-				d.global_scale((d.scale / 100) * target.scale)
-				d.set_disable_scale(true)
 				
 				if target.is_in_group("Enemy"):
 					var b = blood.instance()
@@ -80,6 +75,13 @@ func fire():
 						target.onDiscovered()
 				elif target.is_in_group("Interact"):
 					target.onInteracted(player)
+				else:
+					target.add_child(d)
+					
+					d.global_transform.origin = raycast.get_collision_point()
+					d.look_at(raycast.get_collision_point() + raycast.get_collision_normal(), Vector3.UP)
+					d.global_scale((d.scale / 100) * target.scale)
+					d.set_disable_scale(true)
 					
 				rayRotation.rotate_z(deg2rad(rand_range(-360, 360)))
 

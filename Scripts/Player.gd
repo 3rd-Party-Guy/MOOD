@@ -75,12 +75,16 @@ signal shootDef
 signal shootRifle
 signal shootShotgun
 signal shootLauncher
+signal shootMegaPistol
+signal shootRailgun
 
 signal showDef
 signal showRifle
 signal showShotgun
 signal showLauncher
-#signal showNone
+signal showMegaPistol
+signal showRailgun
+signal showNone
 
 var STATE = DEAD
 
@@ -102,13 +106,13 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("scroll_up"):
 		curWeapon += 1
-		if curWeapon == 4:
+		if curWeapon == 6:
 			curWeapon = 0
 		ChangeWeapon(curWeapon)
 	elif Input.is_action_just_pressed("scroll_down"):
 		curWeapon -= 1
 		if curWeapon == -1:
-			curWeapon = 3
+			curWeapon = 5
 		ChangeWeapon(curWeapon)
 	if STATE != DEAD:
 			
@@ -162,6 +166,11 @@ func _physics_process(delta):
 				emit_signal("shootShotgun")
 			3:
 				emit_signal("shootLauncher")
+			4:
+				emit_signal("shootMegaPistol")
+			5:
+				emit_signal("shootRailgun")
+				
 	if Input.is_action_pressed("kick") and not animationPlayerKick.is_playing():
 		STATE = SHOOTING
 		animationPlayerKick.play("Kick")
@@ -220,6 +229,23 @@ func ChangeWeapon(weapon):
 			
 			#show rocket launcher
 			emit_signal("showLauncher")
+		4:
+			rifleRay.enabled = true
+			for raycast in shotgunRay:
+				raycast.enabled = false
+			launcherRay.enabled = false
+			
+			weaponLabel.text = "Mega Pistol"
+			
+			emit_signal("showMegaPistol")
+		
+		5:
+			rifleRay.enabled = false
+			for raycast in shotgunRay:
+				raycast.enabled = false
+			launcherRay.enabled = false
+			
+			weaponLabel.text = "Railgun"
 			
 	print("Current weapon is: " + str(weapon))
 

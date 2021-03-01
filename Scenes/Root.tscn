@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/EnemyMelee.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Scenes/EnemyProjectile.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/DefPickup.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/DebugSettings.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/MegaPistolPickup.tscn" type="PackedScene" id=16]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody
@@ -354,6 +355,9 @@ audio_listener_enable_3d = true
 shadow_atlas_size = 2048
 
 [node name="Root" type="Spatial" parent="ViewportContainer/Viewport"]
+
+[node name="MegaPistolPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 16 )]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -5.3917, 1.15346, 2.82151 )
 
 [node name="DefPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 14 )]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.84456, 1.13328, 3.25152 )

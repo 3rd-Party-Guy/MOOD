@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://Objects/Enemies/Rifle/rifleRatManV18.tscn" type="PackedScene" id=2]
@@ -8,6 +8,9 @@
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
 height = 0.794
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.462314, 0.165989, 0.489653 )
 
 [sub_resource type="SphereShape" id=2]
 margin = 0.001
@@ -29,6 +32,12 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
 shape = SubResource( 1 )
+
+[node name="HeadCollision" type="CollisionShape" parent="." groups=[
+"Head",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.707526, -0.102535 )
+shape = SubResource( 3 )
 
 [node name="SightRange" type="Area" parent="."]
 collision_layer = 2

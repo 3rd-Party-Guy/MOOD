@@ -38,6 +38,7 @@ func _ready():
 	player.connect("showLauncher", self, "hide")
 # warning-ignore:return_value_discarded
 	player.connect("showNone", self, "hide")
+	player.connect("showMegaPistol", self, "hide")
 
 func fire():
 	if not animPlayer.is_playing() and ammo != 0:
