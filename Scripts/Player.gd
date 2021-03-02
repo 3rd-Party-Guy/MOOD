@@ -247,6 +247,8 @@ func ChangeWeapon(weapon):
 			
 			weaponLabel.text = "Railgun"
 			
+			emit_signal("showRailgun")
+			
 	print("Current weapon is: " + str(weapon))
 
 func _on_DashCooldown_timeout():
