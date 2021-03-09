@@ -25,6 +25,9 @@ func _on_Area_body_entered(body):
 		audio.play()
 	elif not body.is_in_group("Player"):
 		audio.play()
+		if body.is_in_group("Interacted"):
+			body.onInteracted(null)
+	
 
 
 func _on_AudioStreamPlayer_finished():

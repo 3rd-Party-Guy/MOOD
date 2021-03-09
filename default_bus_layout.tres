@@ -7,7 +7,7 @@ resource_name = "Chorus"
 resource_name = "Chorus"
 
 [resource]
-bus/0/volume_db = -4.76812
+bus/0/volume_db = -32.0347
 bus/1/name = "Music"
 bus/1/solo = false
 bus/1/mute = false

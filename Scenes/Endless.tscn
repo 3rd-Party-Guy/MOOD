@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/EndlessLevel.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Scenes/LauncherPickup.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/ShotgunPickup.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/PauseScreen.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/EnemyFly.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/DefPickup.tscn" type="PackedScene" id=14]
 
 [sub_resource type="NavigationMesh" id=1]
@@ -164,3 +165,6 @@ follow_viewport_enable = true
 
 [node name="PauseScreen" parent="CanvasLayer" instance=ExtResource( 11 )]
 visible = false
+
+[node name="EnemyFly" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.10307, 4.54601, 3.35657 )

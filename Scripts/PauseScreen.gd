@@ -1,13 +1,18 @@
 extends Control
 
+onready var buttonEndless = $MarginContainer/CenterContainer/VBoxContainer/Endless
 onready var buttonResume = $MarginContainer/CenterContainer/VBoxContainer/Resume
 onready var buttonRestart = $MarginContainer/CenterContainer/VBoxContainer/Restart
 onready var buttonQuit = $MarginContainer/CenterContainer/VBoxContainer/Quit
+
+var endlessScene = "res://Scenes/Endless.tscn"
 
 func _ready():
 	buttonResume.grab_focus()
 
 func _physics_process(_delta):
+	if buttonEndless.is_hovered():
+		buttonEndless.grab_focus()
 	if buttonResume.is_hovered():
 		buttonResume.grab_focus()
 	if buttonRestart.is_hovered():
@@ -42,3 +47,5 @@ func _on_Restart_pressed():
 func _on_Quit_pressed():
 	get_tree().quit()
 
+func _on_Endless_pressed():
+	get_tree().change_scene(endlessScene)

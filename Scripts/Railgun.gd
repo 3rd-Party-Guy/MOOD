@@ -60,9 +60,6 @@ func fire():
 		$Spawn.add_child(r)
 		
 		r.connect("body_entered", self, "onRail")
-		var new_parent = get_tree()
-		r.get_parent().remove_child(r)
-		new_parent.add_child(r)
 		
 		#r.global_transform.origin.y += 10
 		 
