@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/3-1-Audio 9.wav-a7d882d34fc1058829446506b2ef4464.sample"
+
+[deps]
+
+source_file="res://Sounds/SFX/wetransfer-b694b4/SFX/3-1-Audio 9.wav"
+dest_files=[ "res://.import/3-1-Audio 9.wav-a7d882d34fc1058829446506b2ef4464.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

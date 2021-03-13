@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/12-1-Audio 30.wav-820511becbf564fc08c3f7d70a92bf88.sample"
+
+[deps]
+
+source_file="res://Sounds/Guitar Licks/SFX/12-1-Audio 30.wav"
+dest_files=[ "res://.import/12-1-Audio 30.wav-820511becbf564fc08c3f7d70a92bf88.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

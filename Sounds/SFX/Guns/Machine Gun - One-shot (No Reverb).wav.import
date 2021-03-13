@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Machine Gun - One-shot (No Reverb).wav-0fb017bc0983ad3518d6ddfa779397ce.sample"
+
+[deps]
+
+source_file="res://Sounds/SFX/Guns/Machine Gun - One-shot (No Reverb).wav"
+dest_files=[ "res://.import/Machine Gun - One-shot (No Reverb).wav-0fb017bc0983ad3518d6ddfa779397ce.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,655 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/EnemyMelee.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Level.tscn" type="PackedScene" id=3]
+[ext_resource path="res://PSX Shader/shaders/dithers/bluenoise_128_128.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/RiflePickup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://PSX Shader/shaders/psx_dither_post.shader" type="Shader" id=7]
+[ext_resource path="res://Crosshair.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/LauncherPickup.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/ShotgunPickup.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/PauseScreen.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/AmmoPickup.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/EnemyProjectile.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/DefPickup.tscn" type="PackedScene" id=14]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends KinematicBody
+
+const TURN_SPEED = 10
+
+enum {
+	IDLE,
+	ALERT,
+	BERSERK,
+	DEAD,
+	KICKED
+}
+
+var state = IDLE
+
+export var health = 30
+export var damage = 5
+var target
+
+export var sightRange :int
+export var minDistance : int
+
+export var speed = 10
+var velocity
+
+onready var raycast = $RayCast
+onready var eyes =  $Eyes
+onready var shootTimer = $ShootTimer
+onready var navigationTimer = $NavigationTimer
+onready var audio = $Audio
+onready var audioAlert = $AudioAlert
+onready var anim = $fatRatManV19/AnimationPlayer
+
+onready var projectile = preload(\"res://Scenes/EnemyProjectileBullet.tscn\")
+onready var bloodKicked = preload(\"res://Scenes/BloodSplatterKick.tscn\")
+
+onready var navigation = get_parent().get_parent()
+
+onready var player = get_parent().get_parent().get_node(\"Player\")
+
+var path = []
+var pathNode = 0
+
+func _ready():
+	$\"SightRange/CollisionShape\".shape.set_radius(sightRange)
+
+func _physics_process(_delta):
+	
+	# move towards the player
+	if pathNode < path.size() and state == ALERT:
+		# only calculate and move if the enemy is at a long enough distance
+		if global_transform.origin.distance_to(player.global_transform.origin) > minDistance:
+			var direction = (path[pathNode] - global_transform.origin)	# calculates the direction towards the player
+			
+			if direction.length() < 1:									# if were close to the node, move on to the next one
+				pathNode += 1
+			else:
+	# warning-ignore:return_value_discarded
+				move_and_slide(direction.normalized() * speed, Vector3.UP)
+
+func _process(_delta):
+		
+	if health <= 0 and not audio.playing:
+		#print(\"Enemy has died!\")
+		#audio.play()
+		state = DEAD
+	
+	match state:
+		DEAD:
+			print(\"Enemy has died!\")
+			anim.play(\"death\")
+			audio.play()
+			if anim.current_animation_position > 1.2:
+				queue_free()
+		IDLE:
+			if not anim.current_animation == \"idle\":
+				anim.play(\"idle\")
+			pass
+		
+		ALERT:
+			# look at player
+			eyes.look_at(target.global_transform.origin, Vector3.UP)
+			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
+			if not anim.current_animation == \"patrol\":
+					anim.play(\"patrol\")
+			pass
+		KICKED:
+			var collide = move_and_collide(velocity * 10000)
+			if collide:
+				var b = bloodKicked.instance()
+				add_child(b)
+				b.get_node(\"Particles\").emitting = true
+				health -= 30
+				
+			pass
+		BERSERK:
+			if not anim.current_animation == \"fire\":
+				anim.play(\"fire\")
+			pass
+		
+
+func move_to(target_pos):
+	path = navigation.get_simple_path(global_transform.origin, target_pos)
+	pathNode = 0
+
+func _on_SightRange_body_entered(body):
+	if body.is_in_group(\"Player\") and not state == KICKED:
+		if state != DEAD:
+			state = ALERT
+			audioAlert.play()
+			target = body
+			shootTimer.start()
+			navigationTimer.start()
+
+
+func _on_SightRange_body_exited(body):
+	if body.is_in_group(\"Player\") and not state == KICKED:
+		if state != DEAD:
+			state = IDLE
+
+
+func _on_ShootTimer_timeout():
+	if raycast.is_colliding():
+		if state != DEAD:
+			state = ALERT
+			var p = projectile.instance()
+			add_child(p)
+			p.shoot = true
+
+
+func _on_NavigationTimer_timeout():
+	move_to(player.global_transform.origin)
+
+
+func _on_Audio_finished():
+	queue_free()
+
+func onKicked(pos):
+	velocity = -pos
+	state = KICKED
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends KinematicBody
+
+const TURN_SPEED = 10
+
+enum {
+	IDLE,
+	ALERT,
+	BERSERK,
+	DEAD,
+	KICKED
+}
+
+var state = IDLE
+
+export var health = 30
+export var damage = 5
+var target
+
+export var sightRange :int
+export var minDistance : int
+
+export var speed = 10
+var velocity
+
+onready var raycast = $RayCast
+onready var eyes =  $Eyes
+onready var shootTimer = $ShootTimer
+onready var navigationTimer = $NavigationTimer
+onready var audio = $Audio
+onready var audioAlert = $AudioAlert
+onready var anim = $fatRatManV19/AnimationPlayer
+
+onready var projectile = preload(\"res://Scenes/EnemyProjectileBullet.tscn\")
+onready var bloodKicked = preload(\"res://Scenes/BloodSplatterKick.tscn\")
+
+onready var navigation = get_parent().get_parent()
+
+onready var player = get_parent().get_parent().get_node(\"Player\")
+
+var path = []
+var pathNode = 0
+
+func _ready():
+	$\"SightRange/CollisionShape\".shape.set_radius(sightRange)
+
+func _physics_process(_delta):
+	
+	# move towards the player
+	if pathNode < path.size() and state == ALERT:
+		# only calculate and move if the enemy is at a long enough distance
+		if global_transform.origin.distance_to(player.global_transform.origin) > minDistance:
+			var direction = (path[pathNode] - global_transform.origin)	# calculates the direction towards the player
+			
+			if direction.length() < 1:									# if were close to the node, move on to the next one
+				pathNode += 1
+			else:
+	# warning-ignore:return_value_discarded
+				move_and_slide(direction.normalized() * speed, Vector3.UP)
+
+func _process(_delta):
+		
+	if health <= 0 and not audio.playing:
+		#print(\"Enemy has died!\")
+		#audio.play()
+		state = DEAD
+	
+	match state:
+		DEAD:
+			print(\"Enemy has died!\")
+			anim.play(\"death\")
+			audio.play()
+			if anim.current_animation_position > 1.2:
+				queue_free()
+		IDLE:
+			if not anim.current_animation == \"idle\":
+				anim.play(\"idle\")
+			pass
+		
+		ALERT:
+			# look at player
+			eyes.look_at(target.global_transform.origin, Vector3.UP)
+			rotate_y(deg2rad(eyes.rotation.y * TURN_SPEED))
+			if not anim.current_animation == \"patrol\":
+					anim.play(\"patrol\")
+			pass
+		KICKED:
+			var collide = move_and_collide(velocity * 10000)
+			if collide:
+				var b = bloodKicked.instance()
+				add_child(b)
+				b.get_node(\"Particles\").emitting = true
+				health -= 30
+				
+			pass
+		BERSERK:
+			if not anim.current_animation == \"fire\":
+				anim.play(\"fire\")
+			pass
+		
+
+func move_to(target_pos):
+	path = navigation.get_simple_path(global_transform.origin, target_pos)
+	pathNode = 0
+
+func _on_SightRange_body_entered(body):
+	if body.is_in_group(\"Player\") and not state == KICKED:
+		if state != DEAD:
+			state = ALERT
+			audioAlert.play()
+			target = body
+			shootTimer.start()
+			navigationTimer.start()
+
+
+func _on_SightRange_body_exited(body):
+	if body.is_in_group(\"Player\") and not state == KICKED:
+		if state != DEAD:
+			state = IDLE
+
+
+func _on_ShootTimer_timeout():
+	if raycast.is_colliding():
+		if state != DEAD:
+			state = ALERT
+			var p = projectile.instance()
+			add_child(p)
+			p.shoot = true
+
+
+func _on_NavigationTimer_timeout():
+	move_to(player.global_transform.origin)
+
+
+func _on_Audio_finished():
+	queue_free()
+
+func onKicked(pos):
+	velocity = -pos
+	state = KICKED
+"
+
+[sub_resource type="NavigationMesh" id=3]
+vertices = PoolVector3Array( 11.2497, 1.31812, 25, 11.2497, 1.31812, 29, 13.2497, 1.31812, 30, 15.2497, 1.31812, 24, 20.2497, 1.31812, 4, 20.2497, 1.31812, -2, 15.2497, 1.31812, 3, -2.75026, 1.31812, -3, -5.75026, 1.31812, -1, -5.75026, 1.31812, 4, 3.24974, 1.31812, 4, 5.24974, 1.31812, 2, 8.24974, 1.31812, -2, 20.2497, 1.31812, 11, 20.2497, 1.31812, 4, 15.2497, 1.31812, 3, 15.2497, 1.31812, 13, 24.2497, 1.31812, 25, 20.2497, 1.31812, 24, 15.2497, 1.31812, 24, 13.2497, 1.31812, 30, 13.2497, 2.31812, 35, 24.2497, 1.31812, 35, 20.2497, 1.31812, 17, 20.2497, 1.31812, 11, 15.2497, 1.31812, 13, 8.24974, 1.31812, -2, 5.24974, 1.31812, 2, 15.2497, 1.31812, 3, 20.2497, 1.31812, -2, 20.2497, 1.31812, 17, 15.2497, 1.31812, 13, 15.2497, 1.31812, 24, 20.2497, 1.31812, 24, 2.24974, -62.4319, 40, 2.24974, -62.4319, 38, -3.75026, -62.4319, 37, -4.75026, -62.4319, 39, -16.7503, -62.4319, 20, -27.7503, -62.4319, 20, -27.7503, -62.4319, 29, -12.7503, -62.4319, 39, -4.75026, -62.4319, 39, -3.75026, -62.4319, 37, -3.75026, -62.4319, 29, -3.75026, -62.4319, 29, -3.75026, -62.4319, 22, -5.75026, -62.4319, 20, -27.7503, -62.4319, 29, -27.7503, -62.4319, 39, -20.7503, -62.4319, 39, -3.75026, -62.4319, 29, -5.75026, -62.4319, 20, -16.7503, -62.4319, 20, -27.7503, -62.4319, 29, -20.7503, -62.4319, 39, -12.7503, -62.4319, 39, 24.2497, -62.4319, 35, 24.2497, -62.4319, 41, 30.2497, -62.4319, 41, 30.2497, -62.4319, 35, 15.2497, 1.31812, 39, 15.2497, 1.31812, 42, 21.2497, 1.31812, 42, 21.2497, 1.31812, 39, -24.7503, -64.4319, 42, -25.7503, -64.4319, 45, -24.7503, -64.4319, 52, -12.7503, -64.4319, 52, -12.7503, -64.4319, 42, -12.7503, -64.4319, 52, -0.750259, -64.4319, 52, -0.750259, -64.4319, 42, -12.7503, -64.4319, 42, 4.24974, -62.4319, 46, 2.24974, -62.4319, 43, 0.249741, -62.4319, 46, 0.249741, -62.4319, 49, -25.7503, -62.4319, 46, -25.7503, -62.4319, 49, -23.7503, -62.4319, 52, -20.7503, -62.4319, 50, -20.7503, -62.4319, 45, -23.7503, -62.4319, 43, -6.75026, -62.4319, 45, -6.75026, -62.4319, 50, -3.75026, -62.4319, 52, 0.249741, -62.4319, 49, 0.249741, -62.4319, 46, -3.75026, -62.4319, 43, -30.7503, -62.4319, 46, -30.7503, -62.4319, 49, -25.7503, -62.4319, 49, -25.7503, -62.4319, 46, -11.7503, -62.4319, 43, -14.7503, -62.4319, 45, -14.7503, -62.4319, 50, -11.7503, -62.4319, 52, -6.75026, -62.4319, 50, -6.75026, -62.4319, 45, -20.7503, -62.4319, 45, -20.7503, -62.4319, 50, -17.7503, -62.4319, 52, -14.7503, -62.4319, 50, -14.7503, -62.4319, 45, -17.7503, -62.4319, 43, 4.24974, -62.4319, 46, 0.249741, -62.4319, 49, 9.24974, -62.4319, 50, 12.2497, -62.4319, 45, 14.2497, -61.9319, 51, 21.2497, -61.9319, 51, 21.2497, -61.6819, 44, 12.2497, -62.4319, 45, 9.24974, -62.4319, 50, -2.75026, -64.4319, 56, -5.75026, -64.4319, 56, -4.75026, -64.4319, 63, -2.75026, -64.4319, 68, -12.7503, -64.4319, 59, -15.7503, -64.4319, 56, -21.7503, -64.4319, 56, -21.7503, -64.4319, 68, -13.7503, -64.4319, 68, -2.75026, -64.4319, 68, -4.75026, -64.4319, 63, -7.75026, -64.4319, 65, -10.7503, -64.4319, 68, -8.75026, -64.4319, 56, -15.7503, -64.4319, 56, -12.7503, -64.4319, 59, -9.75026, -64.4319, 61, -9.75026, -64.4319, 61, -10.7503, -64.4319, 68, -7.75026, -64.4319, 65, -8.75026, -64.4319, 56 )
+polygons = [ PoolIntArray( 1, 0, 2 ), PoolIntArray( 2, 0, 3 ), PoolIntArray( 6, 5, 4 ), PoolIntArray( 11, 10, 12 ), PoolIntArray( 12, 10, 7 ), PoolIntArray( 7, 10, 8 ), PoolIntArray( 8, 10, 9 ), PoolIntArray( 14, 13, 15 ), PoolIntArray( 15, 13, 16 ), PoolIntArray( 18, 17, 19 ), PoolIntArray( 19, 17, 20 ), PoolIntArray( 20, 17, 21 ), PoolIntArray( 21, 17, 22 ), PoolIntArray( 25, 24, 23 ), PoolIntArray( 27, 26, 28 ), PoolIntArray( 28, 26, 29 ), PoolIntArray( 33, 32, 30 ), PoolIntArray( 30, 32, 31 ), PoolIntArray( 35, 34, 36 ), PoolIntArray( 36, 34, 37 ), PoolIntArray( 40, 39, 38 ), PoolIntArray( 42, 41, 43 ), PoolIntArray( 43, 41, 44 ), PoolIntArray( 45, 47, 46 ), PoolIntArray( 50, 49, 48 ), PoolIntArray( 52, 51, 53 ), PoolIntArray( 53, 51, 56 ), PoolIntArray( 53, 56, 55 ), PoolIntArray( 53, 55, 54 ), PoolIntArray( 60, 59, 57 ), PoolIntArray( 57, 59, 58 ), PoolIntArray( 64, 63, 61 ), PoolIntArray( 61, 63, 62 ), PoolIntArray( 66, 65, 67 ), PoolIntArray( 67, 65, 69 ), PoolIntArray( 67, 69, 68 ), PoolIntArray( 73, 72, 70 ), PoolIntArray( 70, 72, 71 ), PoolIntArray( 75, 74, 76 ), PoolIntArray( 76, 74, 77 ), PoolIntArray( 83, 82, 78 ), PoolIntArray( 78, 82, 79 ), PoolIntArray( 79, 82, 81 ), PoolIntArray( 79, 81, 80 ), PoolIntArray( 87, 86, 88 ), PoolIntArray( 88, 86, 85 ), PoolIntArray( 88, 85, 84 ), PoolIntArray( 88, 84, 89 ), PoolIntArray( 93, 92, 90 ), PoolIntArray( 90, 92, 91 ), PoolIntArray( 95, 94, 96 ), PoolIntArray( 96, 94, 97 ), PoolIntArray( 97, 94, 99 ), PoolIntArray( 97, 99, 98 ), PoolIntArray( 105, 104, 100 ), PoolIntArray( 100, 104, 103 ), PoolIntArray( 100, 103, 101 ), PoolIntArray( 101, 103, 102 ), PoolIntArray( 109, 108, 106 ), PoolIntArray( 106, 108, 107 ), PoolIntArray( 114, 113, 110 ), PoolIntArray( 110, 113, 111 ), PoolIntArray( 111, 113, 112 ), PoolIntArray( 116, 115, 117 ), PoolIntArray( 117, 115, 118 ), PoolIntArray( 120, 119, 121 ), PoolIntArray( 121, 119, 123 ), PoolIntArray( 121, 123, 122 ), PoolIntArray( 125, 124, 126 ), PoolIntArray( 126, 124, 127 ), PoolIntArray( 131, 130, 128 ), PoolIntArray( 128, 130, 129 ), PoolIntArray( 133, 132, 134 ), PoolIntArray( 134, 132, 135 ) ]
+cell/size = 1.0
+cell/height = 0.25
+agent/height = 1.5
+agent/radius = 0.5
+region/min_size = 3.0
+
+[sub_resource type="Environment" id=4]
+ambient_light_color = Color( 0.360784, 0.360784, 0.360784, 1 )
+
+[sub_resource type="ViewportTexture" id=5]
+viewport_path = NodePath("ViewportContainer/Viewport")
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = ExtResource( 7 )
+shader_param/col_depth = 32.0
+shader_param/dith_range = 1.0
+shader_param/scene_col = SubResource( 5 )
+shader_param/dither_tex = ExtResource( 4 )
+
+[sub_resource type="CanvasItemMaterial" id=7]
+blend_mode = 1
+light_mode = 1
+
+[node name="Control" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 480, 270 )
+transparent_bg = true
+handle_input_locally = false
+render_target_clear_mode = 1
+render_target_update_mode = 3
+audio_listener_enable_3d = true
+shadow_atlas_size = 2048
+
+[node name="Root" type="Spatial" parent="ViewportContainer/Viewport"]
+
+[node name="DefPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 14 )]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.84456, 1.13328, 3.25152 )
+
+[node name="RiflePickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 6 )]
+
+[node name="ShotgunPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 10 )]
+
+[node name="LauncherPickup" parent="ViewportContainer/Viewport/Root" instance=ExtResource( 9 )]
+
+[node name="Navigation" type="Navigation" parent="ViewportContainer/Viewport/Root"]
+
+[node name="Enemies" type="Node" parent="ViewportContainer/Viewport/Root/Navigation"]
+
+[node name="Enemy33" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28.0661, -58.2163, 31.5872 )
+sightRange = 35
+minDistance = 4
+
+[node name="Enemy34" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28.2523, -58.2162, 29.2703 )
+sightRange = 35
+minDistance = 4
+
+[node name="Enemy11" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.1806, -62.7824, 48.4281 )
+sightRange = 10
+minDistance = 6
+
+[node name="Enemy14" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8705, -9.81784, 53.2309 )
+sightRange = 25
+move = false
+
+[node name="Enemy15" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5358, -20.818, 47.7835 )
+sightRange = 15
+move = false
+
+[node name="Enemy16" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4398, -43.693, 42.2841 )
+sightRange = 15
+move = false
+
+[node name="Enemy17" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.454, -52.693, 47.7538 )
+move = false
+
+[node name="Enemy18" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5188, -60, 42.1449 )
+sightRange = 15
+
+[node name="Enemy19" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 31.5188, -60, 42.1449 )
+script = SubResource( 1 )
+sightRange = 15
+minDistance = 5
+
+[node name="Enemy20" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 31.5188, -60, 34.1449 )
+script = SubResource( 2 )
+sightRange = 15
+minDistance = 5
+
+[node name="EnemyMelee" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1175, -63.0468, 40.4101 )
+sightRange = 15
+
+[node name="EnemyMelee2" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1175, -63.0468, 39.4101 )
+sightRange = 15
+
+[node name="Enemy21" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.3807, -63.0539, 39.9737 )
+
+[node name="Enemy22" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.3807, -63.0539, 38.9737 )
+
+[node name="Enemy24" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30.7356, -62.9489, 36.554 )
+sightRange = 15
+
+[node name="Enemy35" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.382, 2.00981, 30.7116 )
+sightRange = 15
+
+[node name="Enemy25" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30.7356, -62.9489, 37.554 )
+sightRange = 15
+
+[node name="Enemy26" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30.7356, -62.9489, 38.554 )
+sightRange = 15
+
+[node name="Enemy23" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 29.3807, -63.0539, 37.9737 )
+
+[node name="EnemyMelee3" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1175, -63.0468, 38.4101 )
+sightRange = 15
+
+[node name="Enemy27" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.6339, -61.8021, 37.7742 )
+sightRange = 35
+minDistance = 4
+
+[node name="Enemy28" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.4208, -62.03, 38.3072 )
+sightRange = 35
+minDistance = 4
+
+[node name="Enemy29" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.4208, -62.03, 38.3072 )
+sightRange = 35
+minDistance = 4
+
+[node name="Enemy30" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4208, -62.03, 38.3072 )
+sightRange = 35
+minDistance = 4
+
+[node name="EnemyMelee4" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.3725, -61.415, 22.2852 )
+sightRange = 10
+minDistance = 0.5
+
+[node name="EnemyMelee5" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.3725, -61.415, 22.2852 )
+sightRange = 10
+minDistance = 0.5
+
+[node name="EnemyMelee6" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3725, -61.415, 22.2852 )
+sightRange = 10
+minDistance = 0.5
+
+[node name="EnemyMelee7" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3725, -61.415, 22.2852 )
+sightRange = 10
+minDistance = 0.5
+
+[node name="EnemyMelee8" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.3725, -61.415, 22.2852 )
+sightRange = 10
+minDistance = 0.5
+
+[node name="Enemy32" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.68165, -58.2162, 19.4576 )
+sightRange = 35
+minDistance = 4
+
+[node name="Enemy31" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0.904491, 9 )
+sightRange = 35
+minDistance = 4
+
+[node name="EnemyMelee9" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8.7943, -63.2153, 46.3764 )
+sightRange = 10
+
+[node name="EnemyRifle" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.96324, -63.2157, 49.4337 )
+sightRange = 10
+
+[node name="EnemyMelee10" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.9074, -63.2153, 47.3206 )
+sightRange = 10
+
+[node name="EnemyRifle2" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.8501, -63.2157, 48.4895 )
+sightRange = 10
+
+[node name="EnemyMelee11" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21.9074, -63.2153, 47.3206 )
+
+[node name="EnemyRifle3" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.8501, -63.2157, 48.4895 )
+
+[node name="EnemyMelee12" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9074, -63.2153, 49.3206 )
+
+[node name="EnemyRifle4" parent="ViewportContainer/Viewport/Root/Navigation/Enemies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8501, -63.2157, 50.4895 )
+
+[node name="Player" parent="ViewportContainer/Viewport/Root/Navigation" instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4, 2, 1 )
+collision_mask = 2147483649
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="ViewportContainer/Viewport/Root/Navigation"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.03161, 0 )
+navmesh = SubResource( 3 )
+
+[node name="Scene" parent="ViewportContainer/Viewport/Root/Navigation/NavigationMeshInstance" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+input_ray_pickable = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="ViewportContainer/Viewport/Root"]
+environment = SubResource( 4 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="ViewportContainer/Viewport/Root/WorldEnvironment"]
+transform = Transform( 0.353553, -0.866025, 0.353553, -0.707107, -9.83519e-09, 0.707107, -0.612373, -0.5, -0.612373, 17, 12, 0 )
+light_energy = 0.1
+light_indirect_energy = 0.0
+light_bake_mode = 0
+directional_shadow_mode = 0
+directional_shadow_split_1 = 1.0
+
+[node name="ClearColor" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1880.0
+margin_bottom = 1040.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Render" type="ColorRect" parent="."]
+light_mask = 2
+material = SubResource( 6 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1880.0
+margin_bottom = 1040.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Crosshair" type="TextureRect" parent="Render"]
+light_mask = 0
+material = SubResource( 7 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -2.0
+margin_top = -2.0
+margin_right = 2.0
+margin_bottom = 2.0
+rect_scale = Vector2( 2, 2 )
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+pause_mode = 2
+layer = 0
+follow_viewport_enable = true
+
+[node name="PauseScreen" parent="CanvasLayer" instance=ExtResource( 11 )]
+visible = false
+
+[node name="AmmoPickup" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.6185, 0.967195, 35.7471 )
+ammo = 25
+
+[node name="AmmoPickup5" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.50764, -62.9577, 47.8888 )
+weapon = 1
+
+[node name="AmmoPickup6" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.50764, -62.9577, 47.8888 )
+weapon = 1
+
+[node name="AmmoPickup7" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.84552, -62.9577, 47.8888 )
+weapon = 1
+
+[node name="AmmoPickup8" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8455, -62.9577, 50.8888 )
+
+[node name="AmmoPickup9" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.8455, -62.9577, 50.8888 )
+
+[node name="AmmoPickup10" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.2766, -62.9577, 50.8888 )
+
+[node name="AmmoPickup11" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2766, -62.9577, 50.8888 )
+
+[node name="AmmoPickup12" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.2766, -62.9577, 50.8888 )
+
+[node name="AmmoPickup13" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.9377, -62.9577, 44.8087 )
+weapon = 2
+
+[node name="AmmoPickup2" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.7011, 1.21312, 33.3811 )
+
+[node name="AmmoPickup3" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7011, 1.21312, 25.3811 )
+
+[node name="AmmoPickup4" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7011, 1.21312, 27.3811 )

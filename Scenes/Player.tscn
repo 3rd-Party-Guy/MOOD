@@ -1,0 +1,531 @@
+[gd_scene load_steps=30 format=2]
+
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Sounds/Guitar Licks/SFX/12-1-Audio 30.wav" type="AudioStream" id=2]
+[ext_resource path="res://Sounds/Jump.wav" type="AudioStream" id=3]
+[ext_resource path="res://Sounds/PlayerHit.wav" type="AudioStream" id=4]
+[ext_resource path="res://Scripts/Score.gd" type="Script" id=5]
+[ext_resource path="res://Sounds/Guitar Licks/SFX/4-1-Audio 12.wav" type="AudioStream" id=6]
+[ext_resource path="res://Healthbar/Top.png" type="Texture" id=7]
+[ext_resource path="res://Healthbar/Background.png" type="Texture" id=8]
+[ext_resource path="res://Healthbar/Middle.png" type="Texture" id=9]
+[ext_resource path="res://Scripts/Healthbar.gd" type="Script" id=10]
+[ext_resource path="res://Font/FONT.tres" type="DynamicFont" id=11]
+[ext_resource path="res://Coin.png" type="Texture" id=12]
+[ext_resource path="res://Scenes/DashGUI.gd" type="Script" id=13]
+[ext_resource path="res://Sounds/Player Death Sound.wav" type="AudioStream" id=14]
+[ext_resource path="res://Scenes/Hand.gd" type="Script" id=15]
+[ext_resource path="res://Crosshair.tscn" type="PackedScene" id=16]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Score"
+length = 2.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "SectionStats"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("SectionStatsTime:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false, true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SectionStatsAmmo:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SectionCompleted:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false, true, false, true, false ]
+}
+
+[sub_resource type="CubeMesh" id=3]
+
+[sub_resource type="CapsuleShape" id=4]
+radius = 0.5
+
+[sub_resource type="Animation" id=5]
+length = 0.2
+
+[sub_resource type="Animation" id=6]
+length = 1.1
+step = 0.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head/Camera/DamageGUI:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 0 ), Color( 1, 0, 0, 0.635294 ), Color( 1, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -0.4, 0 ), Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+
+[sub_resource type="Animation" id=9]
+length = 0.2
+
+[sub_resource type="Animation" id=10]
+length = 1.1
+step = 0.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head/Camera/DamageGUI:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 0 ), Color( 1, 0, 0, 0.635294 ), Color( 1, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -0.4, 0 ), Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+
+[sub_resource type="Animation" id=13]
+resource_name = "Kick"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("Head/Camera/Kick:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.13, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -0.4, -0.57, 0 ), Vector3( -0.4, -0.57, -0.5 ), Vector3( -0.4, -0.57, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Head/Camera/Kick:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.250262 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Head/Camera/RayCastKick:enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.252369 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="KinematicBody" type="KinematicBody" groups=[
+"Player",
+]]
+script = ExtResource( 1 )
+
+[node name="Score" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="Label" type="RichTextLabel" parent="Score"]
+margin_left = 225.0
+margin_top = 10.0
+margin_right = 275.0
+margin_bottom = 30.0
+custom_fonts/normal_font = ExtResource( 11 )
+bbcode_enabled = true
+bbcode_text = "[center]SCORE[/center]"
+text = "SCORE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreAnimation" type="AnimationPlayer" parent="Score"]
+anims/Score = SubResource( 1 )
+
+[node name="Audio" type="AudioStreamPlayer" parent="Score"]
+stream = ExtResource( 6 )
+volume_db = 5.0
+bus = "SFX"
+
+[node name="Head" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0 )
+
+[node name="Camera" type="Camera" parent="Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.5 )
+fov = 100.0
+
+[node name="Hand" type="Spatial" parent="Head/Camera"]
+script = ExtResource( 15 )
+sway_treshhold = 10
+sway_lerp = 4
+sway_left = Vector3( 0, 0.2, 0 )
+sway_right = Vector3( 0, -0.2, 0 )
+
+[node name="RayCastRifle" type="RayCast" parent="Head/Camera"]
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="RayCastLauncher" type="RayCast" parent="Head/Camera"]
+cast_to = Vector3( 0, 0, -50 )
+collide_with_areas = true
+
+[node name="DamageGUI" type="ColorRect" parent="Head/Camera"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 1, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShotgunRayCast" type="Spatial" parent="Head/Camera"]
+
+[node name="ShotgunRay1" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 1, 0, 0, 0, 0.992533, 0.121973, 0, -0.121973, 0.992533, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay2" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.999796, 0.00579781, 0.0193483, -0.00339108, 0.992502, -0.122179, -0.0199116, 0.122089, 0.992319, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay3" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.99416, -0.0379609, -0.101014, 0.0399472, 0.999045, 0.0177135, 0.100246, -0.0216453, 0.994727, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay4" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.965926, -0.256886, -0.0315689, 0.258819, 0.958713, 0.117817, -1.86265e-09, -0.121973, 0.992533, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay5" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.966606, -0.251278, 0.0503113, 0.255491, 0.960184, -0.113008, -0.0199116, 0.122089, 0.992319, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay6" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.949946, -0.295239, -0.102157, 0.295894, 0.955178, -0.00903442, 0.100246, -0.0216453, 0.994727, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay7" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.866025, -0.496267, -0.0609865, 0.5, 0.859559, 0.105632, 0, -0.121973, 0.992533, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay8" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.867544, -0.49123, 0.0778456, 0.496961, 0.862431, -0.096136, -0.0199116, 0.122089, 0.992319, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay9" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.840994, -0.532398, -0.0963374, 0.531675, 0.846218, -0.0351667, 0.100246, -0.0216453, 0.994727, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay10" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.707107, -0.701827, -0.0862479, 0.707107, 0.701827, 0.0862479, 0, -0.121973, 0.992533, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay11" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.70936, -0.697705, 0.100075, 0.704565, 0.705905, -0.0727123, -0.0199116, 0.122089, 0.992319, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay12" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.67473, -0.733274, -0.083953, 0.731224, 0.679589, -0.0589024, 0.100246, -0.0216453, 0.994727, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay13" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.5, -0.859559, -0.105632, 0.866025, 0.496266, 0.0609865, 0, -0.121973, 0.992533, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay14" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.502835, -0.856633, 0.115484, 0.864153, 0.501272, -0.0443334, -0.0199116, 0.122089, 0.992319, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="ShotgunRay15" type="RayCast" parent="Head/Camera/ShotgunRayCast"]
+transform = Transform( 0.462485, -0.884179, -0.0658473, 0.880941, 0.466647, -0.0786239, 0.100246, -0.0216453, 0.994727, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -20 )
+collide_with_areas = true
+
+[node name="UI" type="ViewportContainer" parent="Head/Camera"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1440.0
+margin_bottom = -810.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Crosshair" parent="Head/Camera/UI" instance=ExtResource( 16 )]
+margin_left = 1.52588e-05
+margin_top = 0.0
+margin_right = 4.00002
+margin_bottom = 4.0
+
+[node name="Weapon" type="Label" parent="Head/Camera/UI"]
+margin_left = 15.0
+margin_top = 55.0
+margin_right = 157.0
+margin_bottom = 70.0
+text = "WEAPON"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SectionCompletedAudio" type="AudioStreamPlayer" parent="Head/Camera/UI"]
+stream = ExtResource( 2 )
+bus = "SFX"
+
+[node name="UIAnimator" type="AnimationPlayer" parent="Head/Camera/UI"]
+anims/SectionStats = SubResource( 2 )
+
+[node name="SectionCompleted" type="Label" parent="Head/Camera/UI"]
+visible = false
+margin_left = 165.0
+margin_top = 50.0
+margin_right = 310.0
+margin_bottom = 70.0
+text = "SECTION COMPLETED"
+align = 1
+valign = 1
+max_lines_visible = 1
+
+[node name="SectionStatsTime" type="Label" parent="Head/Camera/UI"]
+visible = false
+margin_left = 190.0
+margin_top = 90.0
+margin_right = 290.0
+margin_bottom = 110.0
+text = "SECTION TIME"
+align = 1
+valign = 1
+max_lines_visible = 1
+
+[node name="SectionStatsAmmo" type="Label" parent="Head/Camera/UI"]
+visible = false
+margin_left = 190.0
+margin_top = 110.0
+margin_right = 293.0
+margin_bottom = 130.0
+text = "SECTION AMMO"
+align = 1
+valign = 1
+max_lines_visible = 1
+
+[node name="Ammo" type="RichTextLabel" parent="Head/Camera/UI"]
+margin_left = 400.0
+margin_top = 225.0
+margin_right = 460.0
+margin_bottom = 245.0
+custom_fonts/normal_font = ExtResource( 11 )
+bbcode_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Flash" type="RichTextLabel" parent="Head/Camera/UI"]
+margin_left = 165.0
+margin_top = 140.0
+margin_right = 315.0
+margin_bottom = 155.0
+rect_pivot_offset = Vector2( 120, 12 )
+custom_fonts/mono_font = ExtResource( 11 )
+custom_fonts/bold_italics_font = ExtResource( 11 )
+custom_fonts/italics_font = ExtResource( 11 )
+custom_fonts/bold_font = ExtResource( 11 )
+custom_fonts/normal_font = ExtResource( 11 )
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+bbcode_enabled = true
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Healthbar" type="TextureProgress" parent="Head/Camera/UI"]
+margin_top = 256.0
+margin_right = 102.0
+margin_bottom = 283.0
+rect_scale = Vector2( 1, 0.5 )
+value = 100.0
+texture_under = ExtResource( 8 )
+texture_over = ExtResource( 7 )
+texture_progress = ExtResource( 9 )
+script = ExtResource( 10 )
+
+[node name="Tween" type="Tween" parent="Head/Camera/UI/Healthbar"]
+
+[node name="DashGUI" type="HBoxContainer" parent="Head/Camera/UI"]
+margin_left = 400.0
+margin_top = 256.0
+margin_right = 600.0
+margin_bottom = 306.0
+alignment = 1
+script = ExtResource( 13 )
+
+[node name="Sprite" type="Sprite" parent="Head/Camera/UI/DashGUI"]
+position = Vector2( 50, 0 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 12 )
+
+[node name="Sprite2" type="Sprite" parent="Head/Camera/UI/DashGUI"]
+position = Vector2( 25, 0 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 12 )
+
+[node name="Sprite3" type="Sprite" parent="Head/Camera/UI/DashGUI"]
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 12 )
+
+[node name="End" type="ColorRect" parent="Head/Camera/UI"]
+visible = false
+margin_right = 480.0
+margin_bottom = 270.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Head/Camera/UI/End"]
+margin_left = 152.0
+margin_top = 37.0
+margin_right = 301.0
+margin_bottom = 159.0
+custom_fonts/normal_font = ExtResource( 11 )
+text = "Thank you for playing!
+
+Expect Updates!
+
+Join our Discord (on Itch) to follow this game's development and help out!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Kick" type="MeshInstance" parent="Head/Camera"]
+transform = Transform( 0.0625, -0.00535898, 0.077274, 0.0647048, 0.0772741, 0, -0.233253, 0.02, 0.0207055, -0.4, -0.57, -0.4 )
+visible = false
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="RayCastKick" type="RayCast" parent="Head/Camera"]
+cast_to = Vector3( 0, 0, -1 )
+collide_with_areas = true
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 5.0
+anims/AssaultFire = SubResource( 5 )
+anims/Damage = SubResource( 6 )
+anims/PlayerBob = SubResource( 7 )
+anims/ShotgunFire = SubResource( 8 )
+
+[node name="AnimationPlayerDeath" type="AnimationPlayer" parent="."]
+playback_speed = 5.0
+anims/AssaultFire = SubResource( 9 )
+anims/Damage = SubResource( 10 )
+anims/PlayerBob = SubResource( 11 )
+anims/ShotgunFire = SubResource( 12 )
+
+[node name="AnimationPlayerKick" type="AnimationPlayer" parent="."]
+anims/Kick = SubResource( 13 )
+
+[node name="DashCooldown" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="JumpAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="HurtAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="DeathTimer" type="Timer" parent="."]
+pause_mode = 2
+one_shot = true
+
+[node name="DeathScreen" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 1, 0, 0, 0.392157 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FlashTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="DeathAudio" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 14 )
+volume_db = 5.0
+bus = "SFX"
+[connection signal="timeout" from="DashCooldown" to="." method="_on_DashCooldown_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
+[connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]

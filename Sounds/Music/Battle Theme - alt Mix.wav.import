@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Battle Theme - alt Mix.wav-75adfa72a2a4bec5aecd20bf751f36f8.sample"
+
+[deps]
+
+source_file="res://Sounds/Music/Battle Theme - alt Mix.wav"
+dest_files=[ "res://.import/Battle Theme - alt Mix.wav-75adfa72a2a4bec5aecd20bf751f36f8.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

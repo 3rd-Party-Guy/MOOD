@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Rocket Launcher - Fire.wav-97dde2816b64d3c12bbc5fde12f1f4f6.sample"
+
+[deps]
+
+source_file="res://Sounds/SFX/Guns/Rocket Launcher - Fire.wav"
+dest_files=[ "res://.import/Rocket Launcher - Fire.wav-97dde2816b64d3c12bbc5fde12f1f4f6.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

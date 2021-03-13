@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Enemy Alert 1.wav-cbb84961307710c65510f3c6f7a8240a.sample"
+
+[deps]
+
+source_file="res://Sounds/SFX/Enemies/Enemy Alert 1.wav"
+dest_files=[ "res://.import/Enemy Alert 1.wav-cbb84961307710c65510f3c6f7a8240a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
